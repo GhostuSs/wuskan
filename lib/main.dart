@@ -1,60 +1,77 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hive/hive.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:wuskan/utils/color_palette/colors.dart';
+import 'package:wuskan/utils/routes/routes.dart';
 
-import 'gen/assets.gen.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+bool premium = false;
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp]);
+  Directory directory = Directory.current;
+  if (Platform.isIOS) {
+    directory = await getApplicationDocumentsDirectory();
+  } else {
+    directory = await getApplicationDocumentsDirectory();
   }
+  Hive.init(directory.path);
+  // final boxs = await Hive.openBox<WaterDaysInMonth>('data');
+  // await boxs.clear();
+  // await box.clear();
+  // final boxf = await Hive.openBox<bool>('premium');
+  // await boxf.clear();
+  final prem = await Hive.openBox<bool>('premium');
+  if (prem.values.isEmpty) await prem.put('premium', false);
+  premium = prem.values.first;
+  runApp(const App());
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
+class App extends StatelessWidget {
+  const App({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+    return ScreenUtilInit(
+      designSize: const Size(390, 844),
+      builder: (Column) => MaterialApp(
+        darkTheme: ThemeData(
+          selectedRowColor: AppColors.aquaBlue,
+          unselectedWidgetColor: AppColors.lightBlue.withOpacity(0.3),
+        ),
+        routes: routes,
+        initialRoute: premium==true
+            ? MainNavigationRoutes.main
+            : MainNavigationRoutes.onboarding,
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          bottomNavigationBarTheme: BottomNavigationBarThemeData(
+              selectedItemColor: AppColors.aquaBlue,
+              selectedLabelStyle: TextStyle(
+                fontFamily: 'MontBold',
+                fontWeight: FontWeight.w400,
+                fontSize: 12.h,
+              ),
+              showUnselectedLabels: true,
+              showSelectedLabels: true,
+              unselectedItemColor:AppColors.aquaBlue.withOpacity(0.3),
+              unselectedLabelStyle: TextStyle(
+                  color: AppColors.aquaBlue.withOpacity(0.3),
+                  fontFamily: 'MontBold',
+                  fontWeight: FontWeight.w400,
+                  fontSize: 12.h),
+              unselectedIconTheme: IconThemeData(color: AppColors.aquaBlue.withOpacity(0.3),)),
+          textTheme: TextTheme(
+              button: TextStyle(
+                fontSize: 45.sp,
+              )),
+        ),
       ),
     );
   }

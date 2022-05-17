@@ -12,8 +12,76 @@ import 'package:flutter/services.dart';
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
-  /// File path: assets/images/player2.svg
-  SvgGenImage get player2 => const SvgGenImage('assets/images/player2.svg');
+  /// File path: assets/images/activebtnpurple.png
+  AssetGenImage get activebtnpurplePng =>
+      const AssetGenImage('assets/images/activebtnpurple.png');
+
+  /// File path: assets/images/activebtnpurple.svg
+  SvgGenImage get activebtnpurpleSvg =>
+      const SvgGenImage('assets/images/activebtnpurple.svg');
+
+  /// File path: assets/images/bg1.png
+  AssetGenImage get bg1 => const AssetGenImage('assets/images/bg1.png');
+
+  /// File path: assets/images/bg2.png
+  AssetGenImage get bg2 => const AssetGenImage('assets/images/bg2.png');
+
+  /// File path: assets/images/bg3.png
+  AssetGenImage get bg3 => const AssetGenImage('assets/images/bg3.png');
+
+  /// File path: assets/images/bomb.png
+  AssetGenImage get bomb => const AssetGenImage('assets/images/bomb.png');
+
+  /// File path: assets/images/coin.png
+  AssetGenImage get coin => const AssetGenImage('assets/images/coin.png');
+
+  /// File path: assets/images/inactivebtngray.svg
+  SvgGenImage get inactivebtngray =>
+      const SvgGenImage('assets/images/inactivebtngray.svg');
+
+  /// File path: assets/images/logo.png
+  AssetGenImage get logo => const AssetGenImage('assets/images/logo.png');
+
+  /// File path: assets/images/longbtnnlue.svg
+  SvgGenImage get longbtnnlue =>
+      const SvgGenImage('assets/images/longbtnnlue.svg');
+
+  /// File path: assets/images/lose.png
+  AssetGenImage get lose => const AssetGenImage('assets/images/lose.png');
+
+  /// File path: assets/images/onboardingbtn.svg
+  SvgGenImage get onboardingbtn =>
+      const SvgGenImage('assets/images/onboardingbtn.svg');
+
+  /// File path: assets/images/player 1.png
+  AssetGenImage get player1 =>
+      const AssetGenImage('assets/images/player 1.png');
+
+  /// File path: assets/images/player 2.png
+  AssetGenImage get player2 =>
+      const AssetGenImage('assets/images/player 2.png');
+
+  /// File path: assets/images/player 3.png
+  AssetGenImage get player3 =>
+      const AssetGenImage('assets/images/player 3.png');
+
+  /// File path: assets/images/player 4.png
+  AssetGenImage get player4 =>
+      const AssetGenImage('assets/images/player 4.png');
+
+  /// File path: assets/images/player 5.png
+  AssetGenImage get player5 =>
+      const AssetGenImage('assets/images/player 5.png');
+
+  /// File path: assets/images/polygon.svg
+  SvgGenImage get polygon => const SvgGenImage('assets/images/polygon.svg');
+
+  /// File path: assets/images/shortbtnblue.svg
+  SvgGenImage get shortbtnblue =>
+      const SvgGenImage('assets/images/shortbtnblue.svg');
+
+  /// File path: assets/images/win.png
+  AssetGenImage get win => const AssetGenImage('assets/images/win.png');
 }
 
 class Assets {

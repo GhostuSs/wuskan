@@ -61,10 +61,7 @@ flutter:
   generate: true
   assets:
     - assets/images/
-#  fonts:
-#    - family: Montserat
-#      fonts:
-#        - asset: assets/fonts/Montserat.ttf
-#    - family: MontBold
-#      fonts:
-#        - asset: assets/fonts/Montserrat-Bold.ttf
+  fonts:
+    - family: Bebas
+      fonts:
+        - asset: assets/fonts/BebasNeue.ttf
