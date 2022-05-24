@@ -66,10 +66,11 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 18.w),
+                        padding: EdgeInsets.symmetric(horizontal: 0),
                         child: Image.asset(
                           Assets.images.logo.path,
                           filterQuality: FilterQuality.high,
+                          width: 385.w,
                         ),
                       ),
                     ],
@@ -152,7 +153,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                         width: 279.w,
                         decoration: BoxDecoration(
                             image: DecorationImage(
-                                image: Svg(Assets.images.onboardingbtn.path,
+                                image: Svg(Assets.images.activebtnpurpleSvg.path,
                                     size: Size(279.w, 72.h)))),
                         child: Center(
                           child: Text(

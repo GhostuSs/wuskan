@@ -29,11 +29,21 @@ class $AssetsImagesGen {
   /// File path: assets/images/bg3.png
   AssetGenImage get bg3 => const AssetGenImage('assets/images/bg3.png');
 
+  /// File path: assets/images/bglogo.svg
+  SvgGenImage get bglogo => const SvgGenImage('assets/images/bglogo.svg');
+
   /// File path: assets/images/bomb.png
   AssetGenImage get bomb => const AssetGenImage('assets/images/bomb.png');
 
   /// File path: assets/images/coin.png
   AssetGenImage get coin => const AssetGenImage('assets/images/coin.png');
+
+  /// File path: assets/images/gameborder.svg
+  SvgGenImage get gameborder =>
+      const SvgGenImage('assets/images/gameborder.svg');
+
+  /// File path: assets/images/gamestar.svg
+  SvgGenImage get gamestar => const SvgGenImage('assets/images/gamestar.svg');
 
   /// File path: assets/images/inactivebtngray.svg
   SvgGenImage get inactivebtngray =>
@@ -76,9 +86,16 @@ class $AssetsImagesGen {
   /// File path: assets/images/polygon.svg
   SvgGenImage get polygon => const SvgGenImage('assets/images/polygon.svg');
 
+  /// File path: assets/images/settingslogo.svg
+  SvgGenImage get settingslogo =>
+      const SvgGenImage('assets/images/settingslogo.svg');
+
   /// File path: assets/images/shortbtnblue.svg
   SvgGenImage get shortbtnblue =>
       const SvgGenImage('assets/images/shortbtnblue.svg');
+
+  /// File path: assets/images/skinslogo.svg
+  SvgGenImage get skinslogo => const SvgGenImage('assets/images/skinslogo.svg');
 
   /// File path: assets/images/win.png
   AssetGenImage get win => const AssetGenImage('assets/images/win.png');
