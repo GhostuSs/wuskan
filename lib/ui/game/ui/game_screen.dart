@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wuskan/gen/assets.gen.dart';
 import 'package:wuskan/utils/color_palette/colors.dart';
 
@@ -14,13 +15,15 @@ class GameScreen extends StatefulWidget {
 
 class _GameState extends State<GameScreen> {
   late final List<int> bombs;
-  final List<double> coeff = [0,1.1, 1.4, 2];
+  List<int> horStepHistory = List.generate(4, (index) => -1);
+  final List<double> coeff = [0, 1.1, 1.4, 2];
   int step = 1;
-  int horizontal=1;
+  int horizontal = 1;
   @override
   initState() {
     var rng = Random();
-    bombs = List.generate(3, (index) => rng.nextInt(3));
+    bombs = List.generate(4, (index) => rng.nextInt(3));
+    bombs[0] = -100;
     print(bombs);
     super.initState();
   }
@@ -79,7 +82,7 @@ class _GameState extends State<GameScreen> {
                     Text(
                       step == 1
                           ? 'Choose the side and tap'
-                          : 'You will get ${(widget.bet * coeff[step - 1]) + widget.bet * step-1}',
+                          : 'You will get ${(widget.bet * coeff[step - 1]) + widget.bet * step - 1}',
                       style: TextStyle(
                           color: AppColors.white,
                           fontSize: 28.w,
@@ -95,100 +98,85 @@ class _GameState extends State<GameScreen> {
                         for (int i = 0; i < 3; i++)
                           InkWell(
                             onTap: () {
-                              setState((){
-                                step++;
-                                horizontal=i;
-                              });
-                                if (bombs[2] != i && step == 3) {
-                                print('win');
-                                setState((){
-                                  horizontal=i;
-                                });
-                              } else {
-                                print(step);
-                              }
-                            },
-                            child: Container(
-                              width: 109.w,
-                              height: 93.h,
-                              child: i==horizontal&&step==3 ? Center(
-                                child: Column(
-                                  children: [
-                                    Spacer(),
-                                    Image.asset(Assets.images.player2.path,height: 70.h,)
-                                  ],
-                                ),
-                              ) : null,
-                            ),
-                          )
-                      ],
-                    ),
-                    Assets.images.gameborder.svg(),
-                    Row(
-                      children: [
-                        for (int i = 0; i < 3; i++)
-                          InkWell(
-                            onTap: () {
-                              setState((){
-                                step++;
-                                horizontal=i;
-                              });
-                              if (bombs[1] != i && step == 2) {
-                                setState((){
-                                  print(i);
-                                  horizontal=i;
-                                });
-                                  print('noBomb');
-                              } else {
-                                print(step);
-                              }
-                            },
-                            child: Container(
-                              width: 109.w,
-                              height: 93.h,
-                              child: i==horizontal&&step==2 ? Center(
-                                child: Column(
-                                  children: [
-                                    Spacer(),
-                                    Image.asset(Assets.images.player2.path,height: 70.h,)
-                                  ],
-                                ),
-                              ) : null,
-                            ),
-                          )
-                      ],
-                    ),
-                    Assets.images.gameborder.svg(),
-                    Row(
-                      children: [
-                        for (int i = 0; i < 3; i++)
-                          InkWell(
-                            onTap: () {
-                              setState((){
-                                if(step!=3) {
+                              if (step < 4)
+                                setState(() {
                                   step++;
                                   horizontal = i;
-                                }
-                              });
-                              if (bombs[0] != i && step == 1) {
-                                // setState(() => step++);
+                                });
+                              if (bombs[3] != i && step == 4) {
+                                print('win');
+                              } else {
+                                print(step);
+                              }
+                            },
+                            child: Container(
+                              width: 109.w,
+                              height: 93.h,
+                              child: cellIcon(i, 4),
+                            ),
+                          )
+                      ],
+                    ),
+                    Assets.images.gameborder.svg(),
+                    Row(
+                      children: [
+                        for (int i = 0; i < 3; i++)
+                          InkWell(
+                            onTap: () {
+                              if (step < 3)
+                                setState(() {
+                                  step++;
+                                  horizontal = i;
+                                  horStepHistory[2]=i;
+                                });
+                              if (bombs[1] != i && step == 3) {
                                 print('noBomb');
                               } else {
                                 print(step);
                               }
                             },
-                            child:  Container(
+                            child: Container(
                               width: 109.w,
                               height: 93.h,
-                              child: i==horizontal&&step==1 ? Center(
-                                child: Column(
-                                  children: [
-                                    Spacer(),
-                                    Image.asset(Assets.images.player2.path,height: 70.h,)
-                                  ],
-                                ),
-                              ) : null,
+                              child: cellIcon(i, 3),
                             ),
+                          )
+                      ],
+                    ),
+                    Assets.images.gameborder.svg(),
+                    Row(
+                      children: [
+                        for (int i = 0; i < 3; i++)
+                          InkWell(
+                            onTap: () {
+                              if (step < 2)
+                                setState(() {
+                                  step++;
+                                  horizontal = i;
+                                  horStepHistory[1]=i;
+                                });
+                              if (bombs[1] != i && step == 2) {
+                                print('noBomb');
+                              } else {
+                                print(step);
+                              }
+                            },
+                            child: Container(
+                              width: 109.w,
+                              height: 93.h,
+                              child: cellIcon(i, 2),
+                            ),
+                          )
+                      ],
+                    ),
+                    Assets.images.gameborder.svg(),
+                    Row(
+                      children: [
+                        for (int i = 0; i < 3; i++)
+                          Container(
+                            width: 109.w,
+                            height: 93.h,
+                            child: cellIcon(i, 1),
                           )
                       ],
                     ),
@@ -201,4 +189,68 @@ class _GameState extends State<GameScreen> {
         ),
       ),
       onWillPop: () async => false);
+  Widget? cellIcon(int indexCell, int stepInd) {
+    print(bombs);
+    if ((step > stepInd &&
+        bombs[stepInd-1] == indexCell &&
+        bombs[stepInd-1] != -100 &&
+        stepInd > 1))
+      return Center(
+        child: Image.asset(
+          Assets.images.bomb.path,
+          filterQuality: FilterQuality.high,
+          height: 72.h,
+        ),
+      );
+    if((step==4&&bombs[3]!=indexCell&&indexCell!=horizontal&&stepInd>3)||(horStepHistory[stepInd-1]==indexCell&&step>stepInd))return Center(
+      child: Assets.images.gamestar
+          .svg(color: AppColors.white.withOpacity(0.5), width: 40.w, height: 40.h),
+    );
+    if(step<4&&stepInd-1==step)return Center(
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(100.r),
+          boxShadow: [
+            BoxShadow(
+              color: Color(0xFFFFC700).withOpacity(0.15),
+              spreadRadius: 0.3,
+              blurRadius: 7
+            )
+          ]
+        ),
+        child: Assets.images.gamestar
+            .svg(color: Color(0xFFFFC700), width: 40.w, height: 40.h),
+      ),
+    );
+    ///Если попадаю на бомбу, то прощай - тут условия что я не попал
+    if(step==4&&horizontal!=bombs[3]&&stepInd==4&&indexCell==bombs[3])return Center(
+      child: Image.asset(
+        Assets.images.bomb.path,
+        filterQuality: FilterQuality.high,
+        height: 72.h,
+      ),
+    );
+    if ((stepInd == 1 && indexCell == 1&&step>1) ||
+        (step > stepInd &&
+            bombs[stepInd-1] != indexCell &&
+            bombs[stepInd-1] != -100 &&
+            stepInd > 1))
+      return Center(
+        child: Assets.images.gamestar
+            .svg(color: AppColors.white, width: 40.w, height: 40.h),
+      );
+    return indexCell == horizontal && step == stepInd
+        ? Center(
+            child: Column(
+              children: [
+                Spacer(),
+                Image.asset(
+                  Assets.images.player2.path,
+                  height: 70.h,
+                )
+              ],
+            ),
+          )
+        : null;
+  }
 }
