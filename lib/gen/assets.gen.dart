@@ -20,6 +20,9 @@ class $AssetsImagesGen {
   SvgGenImage get activebtnpurpleSvg =>
       const SvgGenImage('assets/images/activebtnpurple.svg');
 
+  /// File path: assets/images/barbara.png
+  AssetGenImage get barbara => const AssetGenImage('assets/images/barbara.png');
+
   /// File path: assets/images/bg1.png
   AssetGenImage get bg1 => const AssetGenImage('assets/images/bg1.png');
 
@@ -59,40 +62,42 @@ class $AssetsImagesGen {
   /// File path: assets/images/lose.png
   AssetGenImage get lose => const AssetGenImage('assets/images/lose.png');
 
+  /// File path: assets/images/mike.png
+  AssetGenImage get mike => const AssetGenImage('assets/images/mike.png');
+
+  /// File path: assets/images/missqueen.png
+  AssetGenImage get missqueen =>
+      const AssetGenImage('assets/images/missqueen.png');
+
+  /// File path: assets/images/mitchell.png
+  AssetGenImage get mitchell =>
+      const AssetGenImage('assets/images/mitchell.png');
+
   /// File path: assets/images/onboardingbtn.svg
   SvgGenImage get onboardingbtn =>
       const SvgGenImage('assets/images/onboardingbtn.svg');
 
-  /// File path: assets/images/player 1.png
-  AssetGenImage get player1 =>
-      const AssetGenImage('assets/images/player 1.png');
-
-  /// File path: assets/images/player 2.png
-  AssetGenImage get player2 =>
-      const AssetGenImage('assets/images/player 2.png');
-
-  /// File path: assets/images/player 3.png
-  AssetGenImage get player3 =>
-      const AssetGenImage('assets/images/player 3.png');
-
-  /// File path: assets/images/player 4.png
-  AssetGenImage get player4 =>
-      const AssetGenImage('assets/images/player 4.png');
-
-  /// File path: assets/images/player 5.png
-  AssetGenImage get player5 =>
-      const AssetGenImage('assets/images/player 5.png');
-
   /// File path: assets/images/polygon.svg
   SvgGenImage get polygon => const SvgGenImage('assets/images/polygon.svg');
+
+  /// File path: assets/images/prembtn.svg
+  SvgGenImage get prembtn => const SvgGenImage('assets/images/prembtn.svg');
 
   /// File path: assets/images/settingslogo.svg
   SvgGenImage get settingslogo =>
       const SvgGenImage('assets/images/settingslogo.svg');
 
+  /// File path: assets/images/settingsprplbtn.svg
+  SvgGenImage get settingsprplbtn =>
+      const SvgGenImage('assets/images/settingsprplbtn.svg');
+
   /// File path: assets/images/shortbtnblue.svg
   SvgGenImage get shortbtnblue =>
       const SvgGenImage('assets/images/shortbtnblue.svg');
+
+  /// File path: assets/images/shotgunmike.png
+  AssetGenImage get shotgunmike =>
+      const AssetGenImage('assets/images/shotgunmike.png');
 
   /// File path: assets/images/skinslogo.svg
   SvgGenImage get skinslogo => const SvgGenImage('assets/images/skinslogo.svg');

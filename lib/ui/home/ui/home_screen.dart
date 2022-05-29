@@ -7,6 +7,7 @@ import 'package:hive/hive.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:wuskan/gen/assets.gen.dart';
 import 'package:wuskan/ui/game/ui/game_screen.dart';
+import 'package:wuskan/ui/settings/settings_screen.dart';
 import 'package:wuskan/ui/webview/webview.dart';
 import 'package:wuskan/utils/color_palette/colors.dart';
 import 'package:wuskan/utils/routes/routes.dart';
@@ -321,7 +322,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         InkWell(
-                          onTap: () => print('Settings'),
+                          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_)=>SettingsScreen())),
                           child: Container(
                             width: 77.w,
                             height: 72.h,

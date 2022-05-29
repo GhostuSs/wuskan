@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
@@ -28,7 +29,7 @@ class _GameState extends State<GameScreen> {
     var rng = Random();
     bombs = List.generate(4, (index) => rng.nextInt(3));
     bombs[0] = -100;
-    winsum=widget.bet.toDouble();
+    winsum = widget.bet.toDouble();
     print(bombs);
     super.initState();
   }
@@ -59,82 +60,158 @@ class _GameState extends State<GameScreen> {
                   child: Row(
                     children: [
                       IconButton(
-                          onPressed: () => showDialog(context: context, builder: (_)=>Scaffold(
-                            backgroundColor: Colors.black.withOpacity(0.05),
-                            body: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Row(
-                                  children: [
-                                    Spacer()
-                                  ],
-                                ),
-                              InkWell(
-                                onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (_)=>WinScreen(sum: winsum.toInt()))),
-                                child: Container(
-                                  width: 279.w,
-                                  height: 72.h,
-                                  decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          image: Svg(Assets.images.onboardingbtn.path,size: Size(279.w,72.h))
-                                      )
-                                  ),
-                                  child: Center(
-                                    child: Text('take a reward'.toUpperCase(),style: TextStyle(
-                                        color: AppColors.white,
-                                        fontSize: 35.w,
-                                        fontFamily: 'Bebas',
-                                        fontWeight: FontWeight.w700
-                                    ),),
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(vertical: 24.h),
-                                child: InkWell(
-                                  onTap: ()=>Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=>GameScreen(bet: widget.bet,))),
-                                  child: Container(
-                                    width: 279.w,
-                                    height: 72.h,
-                                    decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                            image: Svg(Assets.images.longbtnnlue.path,size: Size(279.w,72.h))
-                                        )
+                          onPressed: () => showDialog(
+                              context: context,
+                              builder: (_) => Scaffold(
+                                    backgroundColor:
+                                        Colors.black.withOpacity(0.05),
+                                    body: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Row(
+                                          children: [Spacer()],
+                                        ),
+                                        InkWell(
+                                          onTap: () => Navigator.pop(context),
+                                          child: Container(
+                                            width: 279.w,
+                                            height: 72.h,
+                                            decoration: BoxDecoration(
+                                                image: DecorationImage(
+                                                    image: Svg(
+                                                        Assets.images
+                                                            .onboardingbtn.path,
+                                                        size: Size(
+                                                            279.w, 72.h)))),
+                                            child: Center(
+                                              child: Text(
+                                                'resume'.toUpperCase(),
+                                                style: TextStyle(
+                                                    color: AppColors.white,
+                                                    fontSize: 35.w,
+                                                    fontFamily: 'Bebas',
+                                                    fontWeight:
+                                                        FontWeight.w700),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: 24.h),
+                                          child: InkWell(
+                                            onTap: () => showCupertinoDialog(
+                                                context: context,
+                                                builder: (_) =>
+                                                    CupertinoAlertDialog(
+                                                      content: Text(
+                                                          'You will loose the money spent on the game'),
+                                                      title:
+                                                      Text('Restart the game?'),
+                                                      actions: [
+                                                        CupertinoDialogAction(
+                                                          isDefaultAction: true,
+                                                          onPressed: () =>
+                                                              Navigator.pop(
+                                                                  context),
+                                                          child: Text(
+                                                            'Cancel',
+                                                          ),
+                                                        ),
+                                                        CupertinoDialogAction(
+                                                          onPressed: ()=>Navigator.pushReplacement(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                  builder: (_) =>
+                                                                      GameScreen(
+                                                                        bet: widget.bet,
+                                                                      ))),
+                                                          child: Text('Yes'),
+                                                        ),
+                                                      ],
+                                                    )),
+                                            child: Container(
+                                              width: 279.w,
+                                              height: 72.h,
+                                              decoration: BoxDecoration(
+                                                  image: DecorationImage(
+                                                      image: Svg(
+                                                          Assets.images
+                                                              .longbtnnlue.path,
+                                                          size: Size(
+                                                              279.w, 72.h)))),
+                                              child: Center(
+                                                child: Text(
+                                                  'restart'.toUpperCase(),
+                                                  style: TextStyle(
+                                                      color: AppColors.white,
+                                                      fontSize: 35.w,
+                                                      fontFamily: 'Bebas',
+                                                      fontWeight:
+                                                          FontWeight.w700),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        InkWell(
+                                          onTap: () => showCupertinoDialog(
+                                              context: context,
+                                              builder: (_) =>
+                                                  CupertinoAlertDialog(
+                                                    content: Text(
+                                                        'You will loose the money spent on the game'),
+                                                    title:
+                                                        Text('Exit the game?'),
+                                                    actions: [
+                                                      CupertinoDialogAction(
+                                                        isDefaultAction: true,
+                                                        onPressed: () =>
+                                                            Navigator.pop(
+                                                                context),
+                                                        child: Text(
+                                                          'Cancel',
+                                                        ),
+                                                      ),
+                                                      CupertinoDialogAction(
+                                                        onPressed: () => Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder: (_) =>
+                                                                    HomeScreen())),
+                                                        child: Text('Yes'),
+                                                      ),
+                                                    ],
+                                                  )),
+                                          child: Container(
+                                            width: 279.w,
+                                            height: 72.h,
+                                            decoration: BoxDecoration(
+                                                image: DecorationImage(
+                                                    image: Svg(
+                                                        Assets.images
+                                                            .longbtnnlue.path,
+                                                        size: Size(
+                                                            279.w, 72.h)))),
+                                            child: Center(
+                                              child: Text(
+                                                'exit'.toUpperCase(),
+                                                style: TextStyle(
+                                                    color: AppColors.white,
+                                                    fontSize: 35.w,
+                                                    fontFamily: 'Bebas',
+                                                    fontWeight:
+                                                        FontWeight.w700),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                    child: Center(
-                                      child: Text('restart'.toUpperCase(),style: TextStyle(
-                                          color: AppColors.white,
-                                          fontSize: 35.w,
-                                          fontFamily: 'Bebas',
-                                          fontWeight: FontWeight.w700
-                                      ),),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              InkWell(
-                                onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (_)=>HomeScreen())),
-                                child: Container(
-                                  width: 279.w,
-                                  height: 72.h,
-                                  decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          image: Svg(Assets.images.longbtnnlue.path,size: Size(279.w,72.h))
-                                      )
-                                  ),
-                                  child: Center(
-                                    child: Text('exit'.toUpperCase(),style: TextStyle(
-                                        color: AppColors.white,
-                                        fontSize: 35.w,
-                                        fontFamily: 'Bebas',
-                                        fontWeight: FontWeight.w700
-                                    ),),
-                                  ),
-                                ),
-                              ),
-                            ],),
-                          )),
+                                  )),
                           icon: Icon(
                             Icons.menu_rounded,
                             color: AppColors.white,
@@ -184,10 +261,19 @@ class _GameState extends State<GameScreen> {
                                   horizontal = i;
                                 });
                               if (bombs[3] != i && step == 4) {
-                                setState(()=>winsum=winsum*coeff[3]+widget.bet);
-                                Navigator.push(context, MaterialPageRoute(builder: (_)=>WinScreen(sum: winsum.toInt())));
+                                setState(() =>
+                                    winsum = winsum * coeff[3] + widget.bet);
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) =>
+                                            WinScreen(sum: winsum.toInt())));
                               } else {
-                                Navigator.push(context, MaterialPageRoute(builder: (_)=>LooseScreen(sum: winsum.toInt())));
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) =>
+                                            LooseScreen(sum: winsum.toInt())));
                               }
                             },
                             child: Container(
@@ -208,12 +294,18 @@ class _GameState extends State<GameScreen> {
                                 setState(() {
                                   step++;
                                   horizontal = i;
-                                  horStepHistory[2]=i;
+                                  horStepHistory[2] = i;
                                 });
                               if (bombs[2] != i && step == 3) {
-                                setState(()=>winsum=winsum*coeff[2]+widget.bet);
-                              }else{
-                                Navigator.push(context, MaterialPageRoute(builder: (_)=>LooseScreen(sum: winsum.toInt(),)));
+                                setState(() =>
+                                    winsum = winsum * coeff[2] + widget.bet);
+                              } else {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => LooseScreen(
+                                              sum: winsum.toInt(),
+                                            )));
                               }
                             },
                             child: Container(
@@ -234,12 +326,17 @@ class _GameState extends State<GameScreen> {
                                 setState(() {
                                   step++;
                                   horizontal = i;
-                                  horStepHistory[1]=i;
+                                  horStepHistory[1] = i;
                                 });
                               if (bombs[1] != i && step == 2) {
-                                setState(()=>winsum*=coeff[1]);
-                              } else{
-                                Navigator.push(context, MaterialPageRoute(builder: (_)=>LooseScreen(sum: winsum.toInt(),)));
+                                setState(() => winsum *= coeff[1]);
+                              } else {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => LooseScreen(
+                                              sum: winsum.toInt(),
+                                            )));
                               }
                             },
                             child: Container(
@@ -264,41 +361,54 @@ class _GameState extends State<GameScreen> {
                     Assets.images.gameborder.svg(),
                   ],
                 ),
-                SizedBox(height: 20.h,),
+                SizedBox(
+                  height: 20.h,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('Tap cost - ${widget.bet}',style:TextStyle(
-                    color: AppColors.white,
-                    fontSize: 28.w,
-                    fontWeight: FontWeight.w700,
-                    fontFamily: 'Bebas')),
-                    Image.asset(Assets.images.coin.path,filterQuality: FilterQuality.high,)
+                    Text('Tap cost - ${widget.bet}',
+                        style: TextStyle(
+                            color: AppColors.white,
+                            fontSize: 28.w,
+                            fontWeight: FontWeight.w700,
+                            fontFamily: 'Bebas')),
+                    Image.asset(
+                      Assets.images.coin.path,
+                      filterQuality: FilterQuality.high,
+                    )
                   ],
                 ),
                 SizedBox(
                   height: 35.h,
                 ),
-                step>1 ? InkWell(
-                  onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (_)=>WinScreen(sum: winsum.toInt()))),
-                  child: Container(
-                    width: 279.w,
-                    height: 72.h,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: Svg(Assets.images.onboardingbtn.path,size: Size(279.w,72.h))
+                step > 1
+                    ? InkWell(
+                        onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) =>
+                                    WinScreen(sum: winsum.toInt()))),
+                        child: Container(
+                          width: 279.w,
+                          height: 72.h,
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: Svg(Assets.images.onboardingbtn.path,
+                                      size: Size(279.w, 72.h)))),
+                          child: Center(
+                            child: Text(
+                              'take a reward'.toUpperCase(),
+                              style: TextStyle(
+                                  color: AppColors.white,
+                                  fontSize: 35.w,
+                                  fontFamily: 'Bebas',
+                                  fontWeight: FontWeight.w700),
+                            ),
+                          ),
+                        ),
                       )
-                    ),
-                    child: Center(
-                      child: Text('take a reward'.toUpperCase(),style: TextStyle(
-                        color: AppColors.white,
-                        fontSize: 35.w,
-                        fontFamily: 'Bebas',
-                        fontWeight: FontWeight.w700
-                      ),),
-                    ),
-                  ),
-                ):Container()
+                    : Container()
               ],
             ),
           ),
@@ -306,16 +416,17 @@ class _GameState extends State<GameScreen> {
       ),
       onWillPop: () async => false);
   Widget? cellIcon(int indexCell, int stepInd) {
-    if((stepInd<step&&indexCell==bombs[stepInd-1]))return Center(
-      child: Image.asset(
-        Assets.images.bomb.path,
-        filterQuality: FilterQuality.high,
-        height: 72.h,
-      ),
-    );
+    if ((stepInd < step && indexCell == bombs[stepInd - 1]))
+      return Center(
+        child: Image.asset(
+          Assets.images.bomb.path,
+          filterQuality: FilterQuality.high,
+          height: 72.h,
+        ),
+      );
     if ((step == stepInd &&
-        bombs[stepInd-1] == indexCell &&
-        bombs[stepInd-1] != -100 &&
+        bombs[stepInd - 1] == indexCell &&
+        bombs[stepInd - 1] != -100 &&
         stepInd > 1))
       return Center(
         child: Image.asset(
@@ -324,39 +435,49 @@ class _GameState extends State<GameScreen> {
           height: 72.h,
         ),
       );
-    if((step==4&&bombs[3]!=indexCell&&indexCell!=horizontal&&stepInd>3)||(horStepHistory[stepInd-1]==indexCell&&step>stepInd))return Center(
-      child: Assets.images.gamestar
-          .svg(color: AppColors.white.withOpacity(0.5), width: 40.w, height: 40.h),
-    );
-    if(step<4&&stepInd-1==step)return Center(
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(100.r),
-          boxShadow: [
-            BoxShadow(
-              color: Color(0xFFFFC700).withOpacity(0.15),
-              spreadRadius: 0.3,
-              blurRadius: 7
-            )
-          ]
+    if ((step == 4 &&
+            bombs[3] != indexCell &&
+            indexCell != horizontal &&
+            stepInd > 3) ||
+        (horStepHistory[stepInd - 1] == indexCell && step > stepInd))
+      return Center(
+        child: Assets.images.gamestar.svg(
+            color: AppColors.white.withOpacity(0.5), width: 40.w, height: 40.h),
+      );
+    if (step < 4 && stepInd - 1 == step)
+      return Center(
+        child: Container(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(100.r),
+              boxShadow: [
+                BoxShadow(
+                    color: Color(0xFFFFC700).withOpacity(0.15),
+                    spreadRadius: 0.3,
+                    blurRadius: 7)
+              ]),
+          child: Assets.images.gamestar
+              .svg(color: Color(0xFFFFC700), width: 40.w, height: 40.h),
         ),
-        child: Assets.images.gamestar
-            .svg(color: Color(0xFFFFC700), width: 40.w, height: 40.h),
-      ),
-    );
+      );
+
     ///Если попадаю на бомбу, то прощай - тут условия что я не попал
-    if(step==4&&horizontal!=bombs[3]&&stepInd==4&&indexCell==bombs[3])return Center(
-      child: Image.asset(
-        Assets.images.bomb.path,
-        filterQuality: FilterQuality.high,
-        height: 72.h,
-      ),
-    );
-    if ((stepInd == 1 && indexCell == 1&&step>1) ||
+    if (step == 4 &&
+        horizontal != bombs[3] &&
+        stepInd == 4 &&
+        indexCell == bombs[3])
+      return Center(
+        child: Image.asset(
+          Assets.images.bomb.path,
+          filterQuality: FilterQuality.high,
+          height: 72.h,
+        ),
+      );
+    if ((stepInd == 1 && indexCell == 1 && step > 1) ||
         (step > stepInd &&
-            bombs[stepInd-1] != indexCell &&
-            bombs[stepInd-1] != -100 &&
-            stepInd > 1) || (horizontal!=indexCell&&step==stepInd))
+            bombs[stepInd - 1] != indexCell &&
+            bombs[stepInd - 1] != -100 &&
+            stepInd > 1) ||
+        (horizontal != indexCell && step == stepInd))
       return Center(
         child: Assets.images.gamestar
             .svg(color: AppColors.white, width: 40.w, height: 40.h),
@@ -367,7 +488,7 @@ class _GameState extends State<GameScreen> {
               children: [
                 Spacer(),
                 Image.asset(
-                  Assets.images.player2.path,
+                  Assets.images.mike.path,
                   height: 70.h,
                 )
               ],
