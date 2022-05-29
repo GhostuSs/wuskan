@@ -268,7 +268,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         width: 279.w,
                         decoration: BoxDecoration(
                             image: DecorationImage(
-                                image: Svg(Assets.images.activebtnpurpleSvg.path,
+                                image: Svg(Assets.images.onboardingbtn.path,
                                     size: Size(279.w, 72.h)))),
                         child: Center(
                           child: Text(

@@ -99,6 +99,9 @@ class $AssetsImagesGen {
 
   /// File path: assets/images/win.png
   AssetGenImage get win => const AssetGenImage('assets/images/win.png');
+
+  /// File path: assets/images/winbtn.svg
+  SvgGenImage get winbtn => const SvgGenImage('assets/images/winbtn.svg');
 }
 
 class Assets {

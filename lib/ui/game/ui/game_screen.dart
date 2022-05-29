@@ -2,8 +2,11 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:wuskan/gen/assets.gen.dart';
+import 'package:wuskan/ui/home/ui/home_screen.dart';
+import 'package:wuskan/ui/loose/ui/loose_screen.dart';
+import 'package:wuskan/ui/win/ui/win_screen.dart';
 import 'package:wuskan/utils/color_palette/colors.dart';
 
 class GameScreen extends StatefulWidget {
@@ -18,12 +21,14 @@ class _GameState extends State<GameScreen> {
   List<int> horStepHistory = List.generate(4, (index) => -1);
   final List<double> coeff = [0, 1.1, 1.4, 2];
   int step = 1;
+  late double winsum;
   int horizontal = 1;
   @override
   initState() {
     var rng = Random();
     bombs = List.generate(4, (index) => rng.nextInt(3));
     bombs[0] = -100;
+    winsum=widget.bet.toDouble();
     print(bombs);
     super.initState();
   }
@@ -54,7 +59,82 @@ class _GameState extends State<GameScreen> {
                   child: Row(
                     children: [
                       IconButton(
-                          onPressed: () => print('menu'),
+                          onPressed: () => showDialog(context: context, builder: (_)=>Scaffold(
+                            backgroundColor: Colors.black.withOpacity(0.05),
+                            body: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Row(
+                                  children: [
+                                    Spacer()
+                                  ],
+                                ),
+                              InkWell(
+                                onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (_)=>WinScreen(sum: winsum.toInt()))),
+                                child: Container(
+                                  width: 279.w,
+                                  height: 72.h,
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          image: Svg(Assets.images.onboardingbtn.path,size: Size(279.w,72.h))
+                                      )
+                                  ),
+                                  child: Center(
+                                    child: Text('take a reward'.toUpperCase(),style: TextStyle(
+                                        color: AppColors.white,
+                                        fontSize: 35.w,
+                                        fontFamily: 'Bebas',
+                                        fontWeight: FontWeight.w700
+                                    ),),
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(vertical: 24.h),
+                                child: InkWell(
+                                  onTap: ()=>Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=>GameScreen(bet: widget.bet,))),
+                                  child: Container(
+                                    width: 279.w,
+                                    height: 72.h,
+                                    decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                            image: Svg(Assets.images.longbtnnlue.path,size: Size(279.w,72.h))
+                                        )
+                                    ),
+                                    child: Center(
+                                      child: Text('restart'.toUpperCase(),style: TextStyle(
+                                          color: AppColors.white,
+                                          fontSize: 35.w,
+                                          fontFamily: 'Bebas',
+                                          fontWeight: FontWeight.w700
+                                      ),),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              InkWell(
+                                onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (_)=>HomeScreen())),
+                                child: Container(
+                                  width: 279.w,
+                                  height: 72.h,
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          image: Svg(Assets.images.longbtnnlue.path,size: Size(279.w,72.h))
+                                      )
+                                  ),
+                                  child: Center(
+                                    child: Text('exit'.toUpperCase(),style: TextStyle(
+                                        color: AppColors.white,
+                                        fontSize: 35.w,
+                                        fontFamily: 'Bebas',
+                                        fontWeight: FontWeight.w700
+                                    ),),
+                                  ),
+                                ),
+                              ),
+                            ],),
+                          )),
                           icon: Icon(
                             Icons.menu_rounded,
                             color: AppColors.white,
@@ -82,7 +162,7 @@ class _GameState extends State<GameScreen> {
                     Text(
                       step == 1
                           ? 'Choose the side and tap'
-                          : 'You will get ${(widget.bet * coeff[step - 1]) + widget.bet * step - 1}',
+                          : 'You will get ${winsum.round()}',
                       style: TextStyle(
                           color: AppColors.white,
                           fontSize: 28.w,
@@ -104,9 +184,10 @@ class _GameState extends State<GameScreen> {
                                   horizontal = i;
                                 });
                               if (bombs[3] != i && step == 4) {
-                                print('win');
+                                setState(()=>winsum=winsum*coeff[3]+widget.bet);
+                                Navigator.push(context, MaterialPageRoute(builder: (_)=>WinScreen(sum: winsum.toInt())));
                               } else {
-                                print(step);
+                                Navigator.push(context, MaterialPageRoute(builder: (_)=>LooseScreen(sum: winsum.toInt())));
                               }
                             },
                             child: Container(
@@ -129,10 +210,10 @@ class _GameState extends State<GameScreen> {
                                   horizontal = i;
                                   horStepHistory[2]=i;
                                 });
-                              if (bombs[1] != i && step == 3) {
-                                print('noBomb');
-                              } else {
-                                print(step);
+                              if (bombs[2] != i && step == 3) {
+                                setState(()=>winsum=winsum*coeff[2]+widget.bet);
+                              }else{
+                                Navigator.push(context, MaterialPageRoute(builder: (_)=>LooseScreen(sum: winsum.toInt(),)));
                               }
                             },
                             child: Container(
@@ -156,9 +237,9 @@ class _GameState extends State<GameScreen> {
                                   horStepHistory[1]=i;
                                 });
                               if (bombs[1] != i && step == 2) {
-                                print('noBomb');
-                              } else {
-                                print(step);
+                                setState(()=>winsum*=coeff[1]);
+                              } else{
+                                Navigator.push(context, MaterialPageRoute(builder: (_)=>LooseScreen(sum: winsum.toInt(),)));
                               }
                             },
                             child: Container(
@@ -182,7 +263,42 @@ class _GameState extends State<GameScreen> {
                     ),
                     Assets.images.gameborder.svg(),
                   ],
-                )
+                ),
+                SizedBox(height: 20.h,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('Tap cost - ${widget.bet}',style:TextStyle(
+                    color: AppColors.white,
+                    fontSize: 28.w,
+                    fontWeight: FontWeight.w700,
+                    fontFamily: 'Bebas')),
+                    Image.asset(Assets.images.coin.path,filterQuality: FilterQuality.high,)
+                  ],
+                ),
+                SizedBox(
+                  height: 35.h,
+                ),
+                step>1 ? InkWell(
+                  onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (_)=>WinScreen(sum: winsum.toInt()))),
+                  child: Container(
+                    width: 279.w,
+                    height: 72.h,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: Svg(Assets.images.onboardingbtn.path,size: Size(279.w,72.h))
+                      )
+                    ),
+                    child: Center(
+                      child: Text('take a reward'.toUpperCase(),style: TextStyle(
+                        color: AppColors.white,
+                        fontSize: 35.w,
+                        fontFamily: 'Bebas',
+                        fontWeight: FontWeight.w700
+                      ),),
+                    ),
+                  ),
+                ):Container()
               ],
             ),
           ),
@@ -190,8 +306,14 @@ class _GameState extends State<GameScreen> {
       ),
       onWillPop: () async => false);
   Widget? cellIcon(int indexCell, int stepInd) {
-    print(bombs);
-    if ((step > stepInd &&
+    if((stepInd<step&&indexCell==bombs[stepInd-1]))return Center(
+      child: Image.asset(
+        Assets.images.bomb.path,
+        filterQuality: FilterQuality.high,
+        height: 72.h,
+      ),
+    );
+    if ((step == stepInd &&
         bombs[stepInd-1] == indexCell &&
         bombs[stepInd-1] != -100 &&
         stepInd > 1))
@@ -234,7 +356,7 @@ class _GameState extends State<GameScreen> {
         (step > stepInd &&
             bombs[stepInd-1] != indexCell &&
             bombs[stepInd-1] != -100 &&
-            stepInd > 1))
+            stepInd > 1) || (horizontal!=indexCell&&step==stepInd))
       return Center(
         child: Assets.images.gamestar
             .svg(color: AppColors.white, width: 40.w, height: 40.h),
