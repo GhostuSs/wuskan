@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:wuskan/models/user/user_model.dart';
 import 'package:wuskan/utils/color_palette/colors.dart';
 import 'package:wuskan/utils/routes/routes.dart';
 
@@ -22,11 +23,13 @@ Future<void> main() async {
     directory = await getApplicationDocumentsDirectory();
   }
   Hive.init(directory.path);
-  // final boxs = await Hive.openBox<WaterDaysInMonth>('data');
+  Hive.registerAdapter<UserModel>(UserModelAdapter());
   // await boxs.clear();
   // await box.clear();
   // final boxf = await Hive.openBox<bool>('premium');
   // await boxf.clear();
+  final s= await Hive.openBox<UserModel>('userdata');
+  if(s.isEmpty)s.put('userdata', UserModel());
   final prem = await Hive.openBox<bool>('premium');
   if (prem.values.isEmpty) await prem.put('premium', false);
   premium = prem.values.first;

@@ -4,7 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
+import 'package:hive/hive.dart';
 import 'package:wuskan/gen/assets.gen.dart';
+import 'package:wuskan/models/user/user_model.dart';
 import 'package:wuskan/ui/home/ui/home_screen.dart';
 import 'package:wuskan/ui/loose/ui/loose_screen.dart';
 import 'package:wuskan/ui/win/ui/win_screen.dart';
@@ -24,6 +26,7 @@ class _GameState extends State<GameScreen> {
   int step = 1;
   late double winsum;
   int horizontal = 1;
+  UserModel user = Hive.box<UserModel>('userdata').values.first;
   @override
   initState() {
     var rng = Random();
@@ -122,13 +125,16 @@ class _GameState extends State<GameScreen> {
                                                           ),
                                                         ),
                                                         CupertinoDialogAction(
-                                                          onPressed: ()=>Navigator.pushReplacement(
+                                                          onPressed: (){
+                                                            user.balance=user.balance!-widget.bet;
+                                                            Navigator.pushReplacement(
                                                               context,
                                                               MaterialPageRoute(
                                                                   builder: (_) =>
                                                                       GameScreen(
                                                                         bet: widget.bet,
-                                                                      ))),
+                                                                      )));
+                                                            },
                                                           child: Text('Yes'),
                                                         ),
                                                       ],
@@ -177,11 +183,13 @@ class _GameState extends State<GameScreen> {
                                                         ),
                                                       ),
                                                       CupertinoDialogAction(
-                                                        onPressed: () => Navigator.push(
+                                                        onPressed: (){
+                                                          user.balance=(user.balance!-widget.bet);
+                                                          Navigator.push(
                                                             context,
                                                             MaterialPageRoute(
                                                                 builder: (_) =>
-                                                                    HomeScreen())),
+                                                                    HomeScreen()));},
                                                         child: Text('Yes'),
                                                       ),
                                                     ],
@@ -219,7 +227,7 @@ class _GameState extends State<GameScreen> {
                           )),
                       Spacer(),
                       Text(
-                        '1000',
+                        '${user.balance}',
                         style: TextStyle(
                             color: AppColors.white,
                             fontSize: 28.w,
@@ -488,7 +496,7 @@ class _GameState extends State<GameScreen> {
               children: [
                 Spacer(),
                 Image.asset(
-                  Assets.images.mike.path,
+                  'assets/images/${user.activeSkin}.png',
                   height: 70.h,
                 )
               ],

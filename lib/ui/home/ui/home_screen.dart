@@ -6,6 +6,7 @@ import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:hive/hive.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:wuskan/gen/assets.gen.dart';
+import 'package:wuskan/models/user/user_model.dart';
 import 'package:wuskan/ui/game/ui/game_screen.dart';
 import 'package:wuskan/ui/settings/settings_screen.dart';
 import 'package:wuskan/ui/webview/webview.dart';
@@ -49,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Text('1000',style: TextStyle(
+                        Text('${Hive.box<UserModel>('userdata').values.first.balance}',style: TextStyle(
                           color: AppColors.white,
                           fontSize: 28.h,
                           fontWeight: FontWeight.w700,

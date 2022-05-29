@@ -7,13 +7,13 @@ part 'user_model.g.dart';
 class UserModel extends HiveObject{
   UserModel();
   @HiveField(0)
-  int? balance;
+  int? balance=1000;
   @HiveField(1)
-  List<String>? availableSkins=[];
+  List<String>? availableSkins=['mike'];
   @HiveField(2)
-  String? activeSkin;
+  String? activeSkin='mike';
   @HiveField(3)
-  List<String> availableBg=[];
+  List<String> availableBg=['bg1'];
   @HiveField(4)
-  String? activeBg;
+  String? activeBg='bg1';
 }
