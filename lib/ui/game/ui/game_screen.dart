@@ -262,7 +262,7 @@ class _GameState extends State<GameScreen> {
                       children: [
                         for (int i = 0; i < 3; i++)
                           InkWell(
-                            onTap: () {
+                            onTap: () {if(Hive.box<UserModel>('user').values.first.balance!>=widget.bet){
                               if (step < 4)
                                 setState(() {
                                   step++;
@@ -284,7 +284,7 @@ class _GameState extends State<GameScreen> {
                                         builder: (_) =>
                                             LooseScreen(sum: winsum.toInt())));
                               }
-                            },
+                            }},
                             child: Container(
                               width: 109.w,
                               height: 93.h,
@@ -299,6 +299,7 @@ class _GameState extends State<GameScreen> {
                         for (int i = 0; i < 3; i++)
                           InkWell(
                             onTap: () {
+                              if(Hive.box<UserModel>('user').values.first.balance!>=widget.bet){
                               if (step < 3)
                                 setState(() {
                                   step++;
@@ -317,7 +318,7 @@ class _GameState extends State<GameScreen> {
                                               sum: winsum.toInt(),
                                             )));
                               }
-                            },
+                            }},
                             child: Container(
                               width: 109.w,
                               height: 93.h,
@@ -331,7 +332,7 @@ class _GameState extends State<GameScreen> {
                       children: [
                         for (int i = 0; i < 3; i++)
                           InkWell(
-                            onTap: () {
+                            onTap: () {if(Hive.box<UserModel>('user').values.first.balance!>=widget.bet){
                               if (step < 2)
                                 setState(() {
                                   step++;
@@ -349,7 +350,7 @@ class _GameState extends State<GameScreen> {
                                               sum: winsum.toInt(),
                                             )));
                               }
-                            },
+                            }},
                             child: Container(
                               width: 109.w,
                               height: 93.h,

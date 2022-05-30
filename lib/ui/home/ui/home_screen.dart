@@ -7,11 +7,11 @@ import 'package:hive/hive.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:wuskan/gen/assets.gen.dart';
 import 'package:wuskan/models/user/user_model.dart';
+import 'package:wuskan/ui/backgrounds/backgrounds_screen.dart';
 import 'package:wuskan/ui/game/ui/game_screen.dart';
 import 'package:wuskan/ui/settings/settings_screen.dart';
-import 'package:wuskan/ui/webview/webview.dart';
+import 'package:wuskan/ui/skins/skins_screen.dart';
 import 'package:wuskan/utils/color_palette/colors.dart';
-import 'package:wuskan/utils/routes/routes.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -50,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Text('${Hive.box<UserModel>('user').values.first.balance}',style: TextStyle(
+                        Text('${Hive.box<UserModel>('user').values.first.balance!}',style: TextStyle(
                           color: AppColors.white,
                           fontSize: 28.h,
                           fontWeight: FontWeight.w700,
@@ -292,7 +292,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         InkWell(
-                          onTap: () => print('skins'),
+                          onTap: () => Navigator.push(context, PageTransition(child: SkinsScreen(), type: PageTransitionType.rightToLeft)),
                           child: Container(
                             width: 77.w,
                             height: 72.h,
@@ -307,7 +307,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         InkWell(
-                          onTap: ()=>print('bg'),
+                          onTap: ()=>Navigator.push(context, PageTransition(child: BackgroundScreen(), type: PageTransitionType.rightToLeft)),
                           child: Container(
                             width: 77.w,
                             height: 72.h,
