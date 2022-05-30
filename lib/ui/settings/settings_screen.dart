@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
+import 'package:hive/hive.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:wuskan/gen/assets.gen.dart';
 import 'package:wuskan/main.dart';
+import 'package:wuskan/models/user/user_model.dart';
 import 'package:wuskan/ui/onboarding/ui/onboarding.dart';
 import 'package:wuskan/utils/color_palette/colors.dart';
 
@@ -32,7 +34,7 @@ class _HomeScreenState extends State<SettingsScreen> {
                     end: Alignment.bottomCenter,
                     colors: [Color(0xFF142850), Color(0xFF253B6E)]),
                 image: DecorationImage(
-                    image: AssetImage('assets/images/bg1.png'),
+                    image: AssetImage('assets/images/${Hive.box<UserModel>('user').values.first.activeBg}.png'),
                     fit: BoxFit.fill)),
             child: Padding(
               padding: EdgeInsets.only(

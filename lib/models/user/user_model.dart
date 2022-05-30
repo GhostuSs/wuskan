@@ -11,7 +11,7 @@ class UserModel extends HiveObject{
   @HiveField(1)
   List<String>? availableSkins=['mike'];
   @HiveField(2)
-  String? activeSkin='mike';
+  String? activeSkin='missqueen';
   @HiveField(3)
   List<String> availableBg=['bg1'];
   @HiveField(4)

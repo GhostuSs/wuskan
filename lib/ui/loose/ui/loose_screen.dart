@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
+import 'package:hive/hive.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:wuskan/gen/assets.gen.dart';
+import 'package:wuskan/models/user/user_model.dart';
 import 'package:wuskan/ui/game/ui/game_screen.dart';
 import 'package:wuskan/ui/home/ui/home_screen.dart';
 import 'package:wuskan/utils/color_palette/colors.dart';
@@ -17,6 +19,11 @@ class LooseScreen extends StatefulWidget {
 
 class _LooseScreenState extends State<LooseScreen> {
   @override
+  initState(){
+    Hive.box<UserModel>('user').values.first.balance=Hive.box<UserModel>('user').values.first.balance!-widget.sum;
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
     return WillPopScope(
         child: Scaffold(
@@ -29,7 +36,7 @@ class _LooseScreenState extends State<LooseScreen> {
                     end: Alignment.bottomCenter,
                     colors: [Color(0xFF142850), Color(0xFF253B6E)]),
                 image: DecorationImage(
-                    image: AssetImage('assets/images/bg1.png'),
+                    image: AssetImage('assets/images/${Hive.box<UserModel>('user').values.first.activeBg}.png'),
                     fit: BoxFit.fill)),
             child: Padding(
               padding: EdgeInsets.only(top: 64.h, left: 20.w, right: 20.w,bottom: 58.h),

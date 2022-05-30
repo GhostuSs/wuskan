@@ -26,7 +26,7 @@ class _GameState extends State<GameScreen> {
   int step = 1;
   late double winsum;
   int horizontal = 1;
-  UserModel user = Hive.box<UserModel>('userdata').values.first;
+  UserModel user = Hive.box<UserModel>('user').values.first;
   @override
   initState() {
     var rng = Random();
@@ -49,7 +49,7 @@ class _GameState extends State<GameScreen> {
                   end: Alignment.bottomCenter,
                   colors: [Color(0xFF142850), Color(0xFF253B6E)]),
               image: DecorationImage(
-                  image: AssetImage('assets/images/bg1.png'),
+                  image: AssetImage('assets/images/${Hive.box<UserModel>('user').values.first.activeBg}.png'),
                   fit: BoxFit.fill)),
           child: Padding(
             padding: EdgeInsets.only(
@@ -269,6 +269,7 @@ class _GameState extends State<GameScreen> {
                                   horizontal = i;
                                 });
                               if (bombs[3] != i && step == 4) {
+                                Hive.box<UserModel>('user').values.first.balance=Hive.box<UserModel>('user').values.first.balance!-widget.bet;
                                 setState(() =>
                                     winsum = winsum * coeff[3] + widget.bet);
                                 Navigator.push(
@@ -305,6 +306,7 @@ class _GameState extends State<GameScreen> {
                                   horStepHistory[2] = i;
                                 });
                               if (bombs[2] != i && step == 3) {
+                                Hive.box<UserModel>('user').values.first.balance=Hive.box<UserModel>('user').values.first.balance!-widget.bet;
                                 setState(() =>
                                     winsum = winsum * coeff[2] + widget.bet);
                               } else {
@@ -337,6 +339,7 @@ class _GameState extends State<GameScreen> {
                                   horStepHistory[1] = i;
                                 });
                               if (bombs[1] != i && step == 2) {
+                                Hive.box<UserModel>('user').values.first.balance=Hive.box<UserModel>('user').values.first.balance!-widget.bet;
                                 setState(() => winsum *= coeff[1]);
                               } else {
                                 Navigator.push(
@@ -485,7 +488,7 @@ class _GameState extends State<GameScreen> {
             bombs[stepInd - 1] != indexCell &&
             bombs[stepInd - 1] != -100 &&
             stepInd > 1) ||
-        (horizontal != indexCell && step == stepInd))
+        (horizontal != indexCell && step == stepInd && stepInd!=1))
       return Center(
         child: Assets.images.gamestar
             .svg(color: AppColors.white, width: 40.w, height: 40.h),

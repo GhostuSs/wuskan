@@ -28,8 +28,8 @@ Future<void> main() async {
   // await box.clear();
   // final boxf = await Hive.openBox<bool>('premium');
   // await boxf.clear();
-  final s= await Hive.openBox<UserModel>('userdata');
-  if(s.isEmpty)s.put('userdata', UserModel());
+  final s= await Hive.openBox<UserModel>('user');
+  if(s.isEmpty)s.put('user', UserModel());
   final prem = await Hive.openBox<bool>('premium');
   if (prem.values.isEmpty) await prem.put('premium', false);
   premium = prem.values.first;

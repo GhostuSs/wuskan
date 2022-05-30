@@ -37,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     end: Alignment.bottomCenter,
                     colors: [Color(0xFF142850), Color(0xFF253B6E)]),
                 image: DecorationImage(
-                    image: AssetImage('assets/images/bg1.png'),
+                    image: AssetImage('assets/images/${Hive.box<UserModel>('user').values.first.activeBg}.png'),
                     fit: BoxFit.fill)),
             child: Padding(
               padding: EdgeInsets.only(bottom: 45.h,top: 56.h),
@@ -50,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Text('${Hive.box<UserModel>('userdata').values.first.balance}',style: TextStyle(
+                        Text('${Hive.box<UserModel>('user').values.first.balance}',style: TextStyle(
                           color: AppColors.white,
                           fontSize: 28.h,
                           fontWeight: FontWeight.w700,
