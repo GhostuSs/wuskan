@@ -262,22 +262,26 @@ class _GameState extends State<GameScreen> {
                       children: [
                         for (int i = 0; i < 3; i++)
                           InkWell(
-                            onTap: () {if(Hive.box<UserModel>('user').values.first.balance!>=widget.bet){
+                            onTap: () async {if(Hive.box<UserModel>('user').values.first.balance!>=widget.bet){
                               if (step < 4)
                                 setState(() {
                                   step++;
                                   horizontal = i;
                                 });
                               if (bombs[3] != i && step == 4) {
-                                Hive.box<UserModel>('user').values.first.balance=Hive.box<UserModel>('user').values.first.balance!-widget.bet;
+                                user.balance=user.balance!-widget.bet;
                                 setState(() =>
                                     winsum = winsum * coeff[3] + widget.bet);
+                                await Hive.box<UserModel>('user').clear();
+                                await Hive.box<UserModel>('user').add(user);
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                         builder: (_) =>
                                             WinScreen(sum: winsum.toInt())));
                               } else {
+                                await Hive.box<UserModel>('user').clear();
+                                await Hive.box<UserModel>('user').add(user);
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -298,7 +302,7 @@ class _GameState extends State<GameScreen> {
                       children: [
                         for (int i = 0; i < 3; i++)
                           InkWell(
-                            onTap: () {
+                            onTap: () async {
                               if(Hive.box<UserModel>('user').values.first.balance!>=widget.bet){
                               if (step < 3)
                                 setState(() {
@@ -307,7 +311,7 @@ class _GameState extends State<GameScreen> {
                                   horStepHistory[2] = i;
                                 });
                               if (bombs[2] != i && step == 3) {
-                                Hive.box<UserModel>('user').values.first.balance=Hive.box<UserModel>('user').values.first.balance!-widget.bet;
+                                user.balance=user.balance!-widget.bet;
                                 setState(() =>
                                     winsum = winsum * coeff[2] + widget.bet);
                               } else {
@@ -332,7 +336,7 @@ class _GameState extends State<GameScreen> {
                       children: [
                         for (int i = 0; i < 3; i++)
                           InkWell(
-                            onTap: () {if(Hive.box<UserModel>('user').values.first.balance!>=widget.bet){
+                            onTap: () async {if(Hive.box<UserModel>('user').values.first.balance!>=widget.bet){
                               if (step < 2)
                                 setState(() {
                                   step++;
@@ -340,7 +344,7 @@ class _GameState extends State<GameScreen> {
                                   horStepHistory[1] = i;
                                 });
                               if (bombs[1] != i && step == 2) {
-                                Hive.box<UserModel>('user').values.first.balance=Hive.box<UserModel>('user').values.first.balance!-widget.bet;
+                                user.balance=user.balance!-widget.bet;
                                 setState(() => winsum *= coeff[1]);
                               } else {
                                 Navigator.push(
@@ -486,6 +490,7 @@ class _GameState extends State<GameScreen> {
       );
     if ((stepInd == 1 && indexCell == 1 && step > 1) ||
         (step > stepInd &&
+            bombs[stepInd - 1] != indexCell &&
             bombs[stepInd - 1] != indexCell &&
             bombs[stepInd - 1] != -100 &&
             stepInd > 1) ||

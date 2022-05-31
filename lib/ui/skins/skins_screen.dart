@@ -8,6 +8,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:wuskan/gen/assets.gen.dart';
 import 'package:wuskan/models/user/user_model.dart';
 import 'package:wuskan/ui/game/ui/game_screen.dart';
+import 'package:wuskan/ui/home/ui/home_screen.dart';
 import 'package:wuskan/ui/settings/settings_screen.dart';
 import 'package:wuskan/ui/webview/webview.dart';
 import 'package:wuskan/utils/color_palette/colors.dart';
@@ -64,7 +65,7 @@ class _SkinsScreenState extends State<SkinsScreen> {
             "The head of a gang of criminals hiding behind the guise of a business woman",
         price: 10000),
   ];
-
+  UserModel user = Hive.box<UserModel>('user').values.first;
   int currInd = 0;
   @override
   Widget build(BuildContext context) {
@@ -97,25 +98,29 @@ class _SkinsScreenState extends State<SkinsScreen> {
                           width: 10.w,
                         ),
                         IconButton(
-                          onPressed: () => Navigator.pop(context),
-                          icon: Icon(
+                          onPressed: () async {
+                            await Hive.box<UserModel>('user').clear();
+                            await Hive.box<UserModel>('user').add(user);
+                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=>HomeScreen()));
+    },
+                            icon: Icon(
                             Icons.arrow_back,
                             color: AppColors.white,
                             size: 30.w,
-                          ),
-                        ),
-                        Spacer(),
-                        Text(
-                          '${Hive.box<UserModel>('user').values.first.balance}',
-                          style: TextStyle(
+                            ),
+                            ),
+                            Spacer(),
+                            Text(
+                            '${Hive.box<UserModel>('user').values.first.balance}',
+                            style: TextStyle(
                             color: AppColors.white,
                             fontSize: 28.h,
                             fontWeight: FontWeight.w700,
                             fontFamily: 'Bebas',
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 5.w),
+                            ),
+                            ),
+                            Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 5.w),
                           child: Image.asset(
                             Assets.images.coin.path,
                             filterQuality: FilterQuality.high,
@@ -230,7 +235,7 @@ class _SkinsScreenState extends State<SkinsScreen> {
                   ),padding: EdgeInsets.only(bottom: 12.h),),
                   InkWell(
                     onTap: (){
-                      final userData = Hive.box<UserModel>('user').values.first;
+                      final userData = user;
                       if(userData.availableSkins!.contains(skins[currInd].name)==false&&(userData.balance)!>=skins[currInd].price!){
                         setState((){
                           userData.balance=userData.balance!-skins[currInd].price!;
@@ -251,7 +256,7 @@ class _SkinsScreenState extends State<SkinsScreen> {
                       ),
                       child: Center(
                         child: Text(labelSelector(),style: TextStyle(
-                          color: AppColors.white,
+                          color: labelSelector()=='CHOSEN' ? AppColors.white.withOpacity(0.5) :AppColors.white,
                           fontWeight: FontWeight.w700,
                           fontFamily: 'Bebas',
                           fontSize: 35.w

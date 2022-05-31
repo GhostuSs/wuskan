@@ -6,6 +6,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:wuskan/gen/assets.gen.dart';
 import 'package:wuskan/main.dart';
 import 'package:wuskan/models/user/user_model.dart';
+import 'package:wuskan/ui/coins/coins_screen.dart';
 import 'package:wuskan/ui/onboarding/ui/onboarding.dart';
 import 'package:wuskan/utils/color_palette/colors.dart';
 
@@ -20,6 +21,7 @@ class SettingsScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<SettingsScreen> {
   int selectedSum = 250;
+  UserModel user = Hive.box<UserModel>('user').values.first;
   @override
   Widget build(BuildContext context) {
     print(premium);
@@ -55,7 +57,7 @@ class _HomeScreenState extends State<SettingsScreen> {
                           )),
                       Spacer(),
                       Text(
-                        '1000',
+                        '${Hive.box<UserModel>('user').values.first.balance}',
                         style: TextStyle(
                           color: AppColors.white,
                           fontSize: 28.h,
@@ -82,9 +84,19 @@ class _HomeScreenState extends State<SettingsScreen> {
                         MaterialPageRoute(builder: (_) => OnBoardingScreen())),
                   ),
                   if(premium)RawBtn(
+                    onTap: ()async {
+                      if(Hive.box<UserModel>('user').values.first.lastUpdate!.day-DateTime.now().day>=1){
+                        setState(()=> user.balance=user.balance!+user.dailyCoinBalance!);
+                        await Hive.box<UserModel>('user').clear();
+                        await Hive.box<UserModel>('user').add(user);
+                          }else{
+                        print('День еще не прошел');
+                      }
+                    },
                       label: 'get daily coins',
                       svgPath: Assets.images.settingsprplbtn.path),
                   if(premium)RawBtn(
+                    onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (_)=>DailyCoinsScreen())),
                       label: 'change coin balance',
                       svgPath: Assets.images.settingsprplbtn.path),
                   RawBtn(

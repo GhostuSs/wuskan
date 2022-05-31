@@ -1,17 +1,12 @@
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:hive/hive.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:wuskan/gen/assets.gen.dart';
 import 'package:wuskan/models/user/user_model.dart';
-import 'package:wuskan/ui/game/ui/game_screen.dart';
-import 'package:wuskan/ui/settings/settings_screen.dart';
-import 'package:wuskan/ui/webview/webview.dart';
+import 'package:wuskan/ui/home/ui/home_screen.dart';
 import 'package:wuskan/utils/color_palette/colors.dart';
-import 'package:wuskan/utils/routes/routes.dart';
 
 class BackgroundScreen extends StatefulWidget {
   const BackgroundScreen({Key? key}) : super(key: key);
@@ -67,7 +62,7 @@ class _BackgroundScreenState extends State<BackgroundScreen> {
                           width: 10.w,
                         ),
                         IconButton(
-                          onPressed: () => Navigator.pop(context),
+                          onPressed: () => Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=>HomeScreen())),
                           icon: Icon(
                             Icons.arrow_back,
                             color: AppColors.white,
@@ -168,13 +163,13 @@ class _BackgroundScreenState extends State<BackgroundScreen> {
                   InkWell(
                     onTap: (){
                       final userData = Hive.box<UserModel>('user').values.first;
-                      if(userData.availableBg!.contains(bgs[currInd])==false&&(userData.balance)!>=bgs[currInd].price!){
+                      if(userData.availableBg!.contains(bgs[currInd].name!)==false&&(userData.balance)!>=bgs[currInd].price!){
                         setState((){
                           userData.balance=userData.balance!-bgs[currInd].price!;
                           userData.availableBg!.add(bgs[currInd].name!);
                         });
                       }
-                      if(userData.availableBg!.contains(bgs[currInd])==true&&userData.activeBg! != bgs[currInd]){
+                      if(userData.availableBg!.contains(bgs[currInd].name!)==true&&userData.activeBg! != bgs[currInd]){
                         setState(()=>userData.activeBg=bgs[currInd].name!);
                       }
                     },
@@ -206,12 +201,12 @@ class _BackgroundScreenState extends State<BackgroundScreen> {
 
   String labelSelector(){
     if(Hive.box<UserModel>('user').values.first.activeBg==bgs[currInd].name!)return 'CHOSEN';
-    if (Hive.box<UserModel>('user').values.first.availableBg!.contains(bgs[currInd]))return 'CHOOSE';
+    if (Hive.box<UserModel>('user').values.first.availableBg!.contains(bgs[currInd].name!))return 'CHOOSE';
     return 'BUY';
   }
   String pathSelector(){
     if(Hive.box<UserModel>('user').values.first.activeBg==bgs[currInd].name!)return Assets.images.inactivebtngray.path;
-    if (Hive.box<UserModel>('user').values.first.availableBg!.contains(bgs[currInd]))return Assets.images.onboardingbtn.path;
+    if (Hive.box<UserModel>('user').values.first.availableBg!.contains(bgs[currInd].name!))return Assets.images.onboardingbtn.path;
     return Assets.images.onboardingbtn.path;
   }
 }

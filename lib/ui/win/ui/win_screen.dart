@@ -5,22 +5,22 @@ import 'package:hive/hive.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:wuskan/gen/assets.gen.dart';
 import 'package:wuskan/models/user/user_model.dart';
-import 'package:wuskan/ui/game/ui/game_screen.dart';
 import 'package:wuskan/ui/home/ui/home_screen.dart';
 import 'package:wuskan/utils/color_palette/colors.dart';
 
 class WinScreen extends StatefulWidget {
   final int sum;
   const WinScreen({Key? key, required this.sum}) : super(key: key);
-
   @override
   State<WinScreen> createState() => _WinScreenState();
 }
 
 class _WinScreenState extends State<WinScreen> {
+  UserModel user = Hive.box<UserModel>('user').values.first;
   @override
   initState(){
-    Hive.box<UserModel>('user').values.first.balance=Hive.box<UserModel>('user').values.first.balance!+widget.sum;
+    user.balance=user.balance!+widget.sum;
+    Hive.box<UserModel>('user').clear().then((value) => Hive.box<UserModel>('user').add(user));
     super.initState();
   }
   @override

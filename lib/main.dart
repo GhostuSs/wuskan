@@ -36,7 +36,8 @@ Future<void> main() async {
             activeSkin: 'mike',
             availableSkins: ['mike'],
             availableBg: ['bg1'],
-
+            lastUpdate: DateTime.now(),
+            dailyCoinBalance: 1000,
         ));
     // s.close().then((value) async => await Hive.openBox<UserModel>('user'));
     print('empty');

@@ -18,9 +18,11 @@ class LooseScreen extends StatefulWidget {
 }
 
 class _LooseScreenState extends State<LooseScreen> {
+  UserModel user = Hive.box<UserModel>('user').values.first;
   @override
   initState(){
-    Hive.box<UserModel>('user').values.first.balance=Hive.box<UserModel>('user').values.first.balance!-widget.sum;
+    user.balance=user.balance!-widget.sum;
+    Hive.box<UserModel>('user').clear().then((value) => Hive.box<UserModel>('user').add(user));
     super.initState();
   }
   @override
