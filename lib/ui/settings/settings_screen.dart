@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:hive/hive.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:wuskan/gen/assets.gen.dart';
 import 'package:wuskan/main.dart';
 import 'package:wuskan/models/user/user_model.dart';
 import 'package:wuskan/ui/coins/coins_screen.dart';
 import 'package:wuskan/ui/onboarding/ui/onboarding.dart';
-import 'package:wuskan/ui/webview/webview.dart';
 import 'package:wuskan/utils/color_palette/colors.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -25,7 +23,6 @@ class _HomeScreenState extends State<SettingsScreen> {
   UserModel user = Hive.box<UserModel>('user').values.first;
   @override
   Widget build(BuildContext context) {
-    print(premium);
     return WillPopScope(
         child: Scaffold(
           backgroundColor: Color(0xFF142850),
@@ -78,13 +75,13 @@ class _HomeScreenState extends State<SettingsScreen> {
                   SizedBox(
                     height: 40.h,
                   ),
-                  if(!premium)RawBtn(
+                  if(!subscribed)RawBtn(
                     label: 'buy premium',
                     svgPath: Assets.images.prembtn.path,
                     onTap: () => Navigator.push(context,
                         MaterialPageRoute(builder: (_) => OnBoardingScreen())),
                   ),
-                  if(premium)RawBtn(
+                  if(subscribed)RawBtn(
                     onTap: ()async {
                       if(Hive.box<UserModel>('user').values.first.lastUpdate!.day-DateTime.now().day>=1){
                         setState(()=> user.balance=user.balance!+user.dailyCoinBalance!);
@@ -96,16 +93,16 @@ class _HomeScreenState extends State<SettingsScreen> {
                     },
                       label: 'get daily coins',
                       svgPath: Assets.images.settingsprplbtn.path),
-                  if(premium)RawBtn(
+                  if(subscribed)RawBtn(
                     onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (_)=>DailyCoinsScreen())),
                       label: 'change coin balance',
                       svgPath: Assets.images.settingsprplbtn.path),
                   RawBtn(
-                    onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (_)=>WebViewPage())),
+                    onTap: ()=>openPrivacyPolicy(),
                       label: 'privacy policy',
                       svgPath: Assets.images.longbtnnlue.path),
                   RawBtn(
-                      onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (_)=>WebViewPage())),
+                      onTap: ()=>openTermsOfUse(),
                       label: 'terms of use',
                       svgPath: Assets.images.longbtnnlue.path),
                   RawBtn(

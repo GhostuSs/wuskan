@@ -1,18 +1,12 @@
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:hive/hive.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:wuskan/gen/assets.gen.dart';
 import 'package:wuskan/models/user/user_model.dart';
-import 'package:wuskan/ui/game/ui/game_screen.dart';
 import 'package:wuskan/ui/home/ui/home_screen.dart';
-import 'package:wuskan/ui/settings/settings_screen.dart';
-import 'package:wuskan/ui/webview/webview.dart';
 import 'package:wuskan/utils/color_palette/colors.dart';
-import 'package:wuskan/utils/routes/routes.dart';
 
 class SkinsScreen extends StatefulWidget {
   const SkinsScreen({Key? key}) : super(key: key);

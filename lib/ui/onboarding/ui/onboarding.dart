@@ -5,7 +5,6 @@ import 'package:hive/hive.dart';
 import 'package:wuskan/gen/assets.gen.dart';
 import 'package:wuskan/main.dart';
 import 'package:wuskan/models/user/user_model.dart';
-import 'package:wuskan/ui/webview/webview.dart';
 import 'package:wuskan/utils/color_palette/colors.dart';
 import 'package:wuskan/utils/routes/routes.dart';
 
@@ -139,13 +138,6 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   padding: EdgeInsets.symmetric(horizontal: 48.w),
                   child: InkWell(
                     onTap: () async {
-                      final box = await Hive.openBox<bool>('premium');
-                      await box.clear();
-                      await box.put('premium', true);
-                      final seen = await Hive.openBox<bool>('seen');
-                      await seen.clear();
-                      await seen.put('seen', true);
-                      premium = true;
                       Navigator.pushNamed(context, MainNavigationRoutes.main);
                     },
                     child: Container(
@@ -176,11 +168,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       InkWell(
-                        onTap: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    WebViewPage())),
+                        onTap: () =>openTermsOfUse(),
                         child: Text(
                           'Terms of use',
                           style: TextStyle(
@@ -193,10 +181,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                       ),
                       InkWell(
                         onTap: () async {
-                          final box = await Hive.openBox<bool>('premium');
-                          await box.clear();
-                          await box.put('premium', true);
-                          premium = true;
+                          purchase().then((value) => subscribed=value);
                           Navigator.pop(context);
                         },
                         child: Text(
@@ -209,11 +194,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                         ),
                       ),
                       InkWell(
-                        onTap: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    WebViewPage())),
+                        onTap: () => restore(),
                         child: Text(
                           'Privacy Policy',
                           style: TextStyle(
