@@ -162,7 +162,7 @@ class _SkinsScreenState extends State<SkinsScreen> {
                             child: Container(
                               child: Column(
                                 children: [
-                                  Image.asset('assets/images/${skins[currInd].name}.png',filterQuality: FilterQuality.high,scale: 0.95,),
+                                  Image.asset('assets/images/${skins[currInd].name}.png',filterQuality: FilterQuality.high,width: 230.w),
                                   Spacer(),
                                   Text(skins[currInd].dispname!.toUpperCase()
                                     ,style: TextStyle(

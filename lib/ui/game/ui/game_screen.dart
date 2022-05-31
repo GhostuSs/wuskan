@@ -297,7 +297,7 @@ class _GameState extends State<GameScreen> {
                           )
                       ],
                     ),
-                    Assets.images.gameborder.svg(),
+                    Assets.images.gameborder.svg(width: 328.w),
                     Row(
                       children: [
                         for (int i = 0; i < 3; i++)
@@ -331,7 +331,7 @@ class _GameState extends State<GameScreen> {
                           )
                       ],
                     ),
-                    Assets.images.gameborder.svg(),
+                    Assets.images.gameborder.svg(width: 328.w),
                     Row(
                       children: [
                         for (int i = 0; i < 3; i++)
@@ -363,7 +363,7 @@ class _GameState extends State<GameScreen> {
                           )
                       ],
                     ),
-                    Assets.images.gameborder.svg(),
+                    Assets.images.gameborder.svg(width: 328.w),
                     Row(
                       children: [
                         for (int i = 0; i < 3; i++)
@@ -374,7 +374,7 @@ class _GameState extends State<GameScreen> {
                           )
                       ],
                     ),
-                    Assets.images.gameborder.svg(),
+                    Assets.images.gameborder.svg(width: 328.w),
                   ],
                 ),
                 SizedBox(
@@ -396,7 +396,7 @@ class _GameState extends State<GameScreen> {
                   ],
                 ),
                 SizedBox(
-                  height: 35.h,
+                  height: 25.h,
                 ),
                 step > 1
                     ? InkWell(

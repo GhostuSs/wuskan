@@ -94,6 +94,8 @@ class _WinScreenState extends State<WinScreen> {
                       Assets.images.win.path,
                       filterQuality: FilterQuality.high,
                       fit: BoxFit.fill,
+                      width: 375.w,
+                      height: 375.h,
                     ),
                   ),
                   Spacer(),

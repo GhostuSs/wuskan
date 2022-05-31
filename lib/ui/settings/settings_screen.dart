@@ -8,6 +8,7 @@ import 'package:wuskan/main.dart';
 import 'package:wuskan/models/user/user_model.dart';
 import 'package:wuskan/ui/coins/coins_screen.dart';
 import 'package:wuskan/ui/onboarding/ui/onboarding.dart';
+import 'package:wuskan/ui/webview/webview.dart';
 import 'package:wuskan/utils/color_palette/colors.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -100,9 +101,11 @@ class _HomeScreenState extends State<SettingsScreen> {
                       label: 'change coin balance',
                       svgPath: Assets.images.settingsprplbtn.path),
                   RawBtn(
+                    onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (_)=>WebViewPage())),
                       label: 'privacy policy',
                       svgPath: Assets.images.longbtnnlue.path),
                   RawBtn(
+                      onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (_)=>WebViewPage())),
                       label: 'terms of use',
                       svgPath: Assets.images.longbtnnlue.path),
                   RawBtn(

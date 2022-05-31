@@ -92,6 +92,8 @@ class _LooseScreenState extends State<LooseScreen> {
                       Assets.images.lose.path,
                       filterQuality: FilterQuality.high,
                       fit: BoxFit.fill,
+                      width: 375.w,
+                      height: 375.h,
                     ),
                   ),
                   Spacer(),

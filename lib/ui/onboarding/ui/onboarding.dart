@@ -24,7 +24,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     return WillPopScope(
         child: Scaffold(
           backgroundColor: Color(0xFF142850),
-          body: Container(
+          body:Container(
             width: double.infinity,
             decoration: BoxDecoration(
                 gradient: LinearGradient(
@@ -34,203 +34,199 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 image: DecorationImage(
                     image: AssetImage('assets/images/${Hive.box<UserModel>('user').values.first.activeBg}.png'),
                     fit: BoxFit.fill)),
-            child: Padding(
-              padding: EdgeInsets.only(bottom: 45.h),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(
-                            top: 63.h, right: 31.w, bottom: 19.h),
-                        child: InkWell(
-                          onTap: () async {
-                            final box = await Hive.openBox<bool>('seen');
-                            await box.clear();
-                            await box.put('seen', true);
-                            Navigator.pushNamed(
-                                context, MainNavigationRoutes.main);
-                          },
-                          child: Icon(
-                            Icons.clear,
-                            color: AppColors.white,
-                            size: 30.h,
-                          ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(
+                          top: 63.h, right: 31.w, bottom: 19.h),
+                      child: InkWell(
+                        onTap: () async {
+                          final box = await Hive.openBox<bool>('seen');
+                          await box.clear();
+                          await box.put('seen', true);
+                          Navigator.pushNamed(
+                              context, MainNavigationRoutes.main);
+                        },
+                        child: Icon(
+                          Icons.clear,
+                          color: AppColors.white,
+                          size: 30.h,
                         ),
-                      )
-                    ],
-                  ),
-                  Row(
+                      ),
+                    )
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 0),
+                      child: Image.asset(
+                        Assets.images.logo.path,
+                        filterQuality: FilterQuality.high,
+                        height: 285.h,
+                        width: 374.w,
+                      ),
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 12.h),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 0),
-                        child: Image.asset(
-                          Assets.images.logo.path,
-                          filterQuality: FilterQuality.high,
-                          width: 385.w,
+                      Text(
+                        "Let’s unlock all the\nfeatures".toUpperCase(),
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: AppColors.white,
+                          fontSize: 35.w,
+                          fontWeight: FontWeight.w700,
+                          fontFamily: 'Bebas',
                         ),
                       ),
                     ],
                   ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 12.h),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Let’s unlock all the\nfeatures".toUpperCase(),
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
+                ),
+                SizedBox(
+                  height: 8.h,
+                ),
+                Padding(
+                  padding:
+                  EdgeInsets.symmetric(horizontal: 56.w, vertical: 24.h),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Assets.images.polygon.svg(width: 16.w,height: 16.w),
+                      Text(
+                        'Unlimited balance',
+                        style: TextStyle(
                             color: AppColors.white,
-                            fontSize: 35.w,
                             fontWeight: FontWeight.w700,
                             fontFamily: 'Bebas',
-                          ),
-                        ),
-                      ],
-                    ),
+                            fontSize: 28.w),
+                      ),
+                      Assets.images.polygon.svg(width: 16.w,height: 16.w),
+                    ],
                   ),
-                  SizedBox(
-                    height: 8.h,
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 56.w),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Assets.images.polygon.svg(width: 16.w,height: 16.w),
+                      Text(
+                        'AD removing',
+                        style: TextStyle(
+                            color: AppColors.white,
+                            fontWeight: FontWeight.w700,
+                            fontFamily: 'Bebas',
+                            fontSize: 28.w),
+                      ),
+                      Assets.images.polygon.svg(width: 16.w,height: 16.w),
+                    ],
                   ),
-                  Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 56.w, vertical: 24.h),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Assets.images.polygon.svg(),
-                        Text(
-                          'Unlimited balance',
+                ),
+                Spacer(),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 48.w),
+                  child: InkWell(
+                    onTap: () async {
+                      final box = await Hive.openBox<bool>('premium');
+                      await box.clear();
+                      await box.put('premium', true);
+                      final seen = await Hive.openBox<bool>('seen');
+                      await seen.clear();
+                      await seen.put('seen', true);
+                      premium = true;
+                      Navigator.pushNamed(context, MainNavigationRoutes.main);
+                    },
+                    child: Container(
+                      height: 72.h,
+                      width: 279.w,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: Svg(Assets.images.onboardingbtn.path,
+                                  size: Size(279.w, 72.h)))),
+                      child: Center(
+                        child: Text(
+                          "Buy for 0.99\$".toUpperCase(),
                           style: TextStyle(
-                              color: AppColors.white,
-                              fontWeight: FontWeight.w700,
-                              fontFamily: 'Bebas',
-                              fontSize: 28.w),
-                        ),
-                        Assets.images.polygon.svg(),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 56.w),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Assets.images.polygon.svg(),
-                        Text(
-                          'AD removing',
-                          style: TextStyle(
-                              color: AppColors.white,
-                              fontWeight: FontWeight.w700,
-                              fontFamily: 'Bebas',
-                              fontSize: 28.w),
-                        ),
-                        Assets.images.polygon.svg(),
-                      ],
-                    ),
-                  ),
-                  Spacer(),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 48.w),
-                    child: InkWell(
-                      onTap: () async {
-                        final box = await Hive.openBox<bool>('premium');
-                        await box.clear();
-                        await box.put('premium', true);
-                        final seen = await Hive.openBox<bool>('seen');
-                        await seen.clear();
-                        await seen.put('seen', true);
-                        premium = true;
-                        Navigator.pushNamed(context, MainNavigationRoutes.main);
-                      },
-                      child: Container(
-                        height: 72.h,
-                        width: 279.w,
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: Svg(Assets.images.onboardingbtn.path,
-                                    size: Size(279.w, 72.h)))),
-                        child: Center(
-                          child: Text(
-                            "Buy for 0.99\$".toUpperCase(),
-                            style: TextStyle(
-                              color: AppColors.white,
-                              fontWeight: FontWeight.w700,
-                              fontFamily: 'Bebas',
-                              fontSize: 35.w,
-                            ),
+                            color: AppColors.white,
+                            fontWeight: FontWeight.w700,
+                            fontFamily: 'Bebas',
+                            fontSize: 35.w,
                           ),
                         ),
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: 27.h,
+                ),
+                Padding(
+                  padding:
+                  EdgeInsets.symmetric(horizontal: 56.w, vertical: 18.h),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      InkWell(
+                        onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    WebViewPage())),
+                        child: Text(
+                          'Terms of use',
+                          style: TextStyle(
+                            color: AppColors.white,
+                            fontWeight: FontWeight.w500,
+                            fontFamily: 'Bebas',
+                            fontSize: 16.w,
+                          ),
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () async {
+                          final box = await Hive.openBox<bool>('premium');
+                          await box.clear();
+                          await box.put('premium', true);
+                          premium = true;
+                          Navigator.pop(context);
+                        },
+                        child: Text(
+                          'Restore',
+                          style: TextStyle(
+                              color: AppColors.white,
+                              fontWeight: FontWeight.w500,
+                              fontFamily: 'Bebas',
+                              fontSize: 16.w),
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    WebViewPage())),
+                        child: Text(
+                          'Privacy Policy',
+                          style: TextStyle(
+                              color: AppColors.white,
+                              fontWeight: FontWeight.w500,
+                              fontFamily: 'Bebas',
+                              fontSize: 16.w),
+                        ),
+                      ),
+                    ],
                   ),
-                  Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 56.w, vertical: 18.h),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        InkWell(
-                          onTap: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (BuildContext context) =>
-                                      WebViewPage())),
-                          child: Text(
-                            'Terms of use',
-                            style: TextStyle(
-                                color: AppColors.white,
-                                fontWeight: FontWeight.w500,
-                                fontFamily: 'Bebas',
-                                fontSize: 16.w),
-                          ),
-                        ),
-                        InkWell(
-                          onTap: () async {
-                            final box = await Hive.openBox<bool>('premium');
-                            await box.clear();
-                            await box.put('premium', true);
-                            premium = true;
-                            Navigator.pop(context);
-                          },
-                          child: Text(
-                            'Restore',
-                            style: TextStyle(
-                                color: AppColors.white,
-                                fontWeight: FontWeight.w500,
-                                fontFamily: 'Bebas',
-                                fontSize: 16.w),
-                          ),
-                        ),
-                        InkWell(
-                          onTap: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (BuildContext context) =>
-                                      WebViewPage())),
-                          child: Text(
-                            'Privacy Policy',
-                            style: TextStyle(
-                                color: AppColors.white,
-                                fontWeight: FontWeight.w500,
-                                fontFamily: 'Bebas',
-                                fontSize: 16.w),
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
+                )
+              ],
             ),
           ),
         ),

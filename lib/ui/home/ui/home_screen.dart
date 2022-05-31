@@ -72,6 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           Assets.images.logo.path,
                           filterQuality: FilterQuality.high,
                           width: 385.w,
+                          height: 265.h,
                         ),
                       ),
                     ],
@@ -298,11 +299,11 @@ class _HomeScreenState extends State<HomeScreen> {
                             height: 72.h,
                             decoration: BoxDecoration(
                                 image: DecorationImage(
-                                    image: Svg(Assets.images.shortbtnblue.path)
+                                    image: Svg(Assets.images.shortbtnblue.path,size: Size(72.w,72.w))
                                 )
                             ),
                             child: Center(
-                              child: Assets.images.skinslogo.svg(),
+                              child: Assets.images.skinslogo.svg(width: 20.w,height: 29.h),
                             ),
                           ),
                         ),
@@ -313,11 +314,11 @@ class _HomeScreenState extends State<HomeScreen> {
                             height: 72.h,
                             decoration: BoxDecoration(
                               image: DecorationImage(
-                                image: Svg(Assets.images.shortbtnblue.path)
+                                image: Svg(Assets.images.shortbtnblue.path,size: Size(72.w,72.w))
                               )
                             ),
                             child: Center(
-                              child: Assets.images.bglogo.svg(),
+                              child: Assets.images.bglogo.svg(width: 26.w,height: 26.h),
                             ),
                           ),
                         ),
@@ -328,11 +329,11 @@ class _HomeScreenState extends State<HomeScreen> {
                             height: 72.h,
                             decoration: BoxDecoration(
                                 image: DecorationImage(
-                                    image: Svg(Assets.images.shortbtnblue.path)
+                                    image: Svg(Assets.images.shortbtnblue.path,size: Size(72.w,72.w))
                                 )
                             ),
                             child: Center(
-                              child: Assets.images.settingslogo.svg(),
+                              child: Assets.images.settingslogo.svg(width: 26.w,height: 29.h),
                             ),
                           ),
                         ),

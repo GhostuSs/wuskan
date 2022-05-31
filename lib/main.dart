@@ -27,6 +27,7 @@ Future<void> main() async {
   // final boxf = await Hive.openBox<bool>('premium');
   // await boxf.clear();
   final s = await Hive.openBox<UserModel>('user');
+  // await s.clear();
   if (s.values.isEmpty) {
     s.put(
         'user',
