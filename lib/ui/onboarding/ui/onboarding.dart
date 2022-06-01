@@ -187,7 +187,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                         ),
                       ),
                       InkWell(
-                        onTap: ()=>restore(),
+                        onTap: ()=>restore().then((value) => value ? Navigator.pop(context) : null),
                         child: Text(
                           'Restore',
                           style: TextStyle(
