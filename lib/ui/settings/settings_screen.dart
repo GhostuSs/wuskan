@@ -106,9 +106,11 @@ class _HomeScreenState extends State<SettingsScreen> {
                       label: 'terms of use',
                       svgPath: Assets.images.longbtnnlue.path),
                   RawBtn(
+                    onTap:(){},
                       label: 'rate app',
                       svgPath: Assets.images.longbtnnlue.path),
                   RawBtn(
+                    onTap:(){},
                       label: 'support',
                       svgPath: Assets.images.longbtnnlue.path),
                 ],
