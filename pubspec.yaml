@@ -72,6 +72,6 @@ flutter:
   assets:
     - assets/images/
   fonts:
-    - family: Bebas
+    - family: SFPro
       fonts:
-        - asset: assets/fonts/BebasNeue.ttf
+        - asset: assets/fonts/SFProDisplay.ttf

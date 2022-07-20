@@ -3,14 +3,15 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:hive/hive.dart';
 import 'package:wuskan/gen/assets.gen.dart';
 import 'package:wuskan/models/user/user_model.dart';
-import 'package:wuskan/ui/home/ui/home_screen.dart';
+import 'package:wuskan/ui/main/ui/main_screen.dart';
 import 'package:wuskan/ui/loose/ui/loose_screen.dart';
 import 'package:wuskan/ui/win/ui/win_screen.dart';
+import 'package:wuskan/uikit/main_button.dart';
 import 'package:wuskan/utils/color_palette/colors.dart';
+import 'package:wuskan/utils/typography/apptypography.dart';
 
 class GameScreen extends StatefulWidget {
   GameScreen({required this.bet});
@@ -40,17 +41,8 @@ class _GameState extends State<GameScreen> {
   @override
   Widget build(BuildContext context) => WillPopScope(
       child: Scaffold(
-        backgroundColor: Color(0xFF142850),
+        backgroundColor: AppColors.darkBlue,
         body: Container(
-          width: double.infinity,
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [Color(0xFF142850), Color(0xFF253B6E)]),
-              image: DecorationImage(
-                  image: AssetImage('assets/images/${Hive.box<UserModel>('user').values.first.activeBg}.png'),
-                  fit: BoxFit.fill)),
           child: Padding(
             padding: EdgeInsets.only(
                 bottom: 45.h, top: 40.h, left: 16.w, right: 16.w),
@@ -63,197 +55,81 @@ class _GameState extends State<GameScreen> {
                   child: Row(
                     children: [
                       IconButton(
-                          onPressed: () => showDialog(
+                          onPressed: () => showCupertinoDialog(
                               context: context,
-                              builder: (_) => Scaffold(
-                                    backgroundColor:
-                                        Colors.black.withOpacity(0.05),
-                                    body: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Row(
-                                          children: [Spacer()],
+                              builder: (_) =>
+                                  CupertinoAlertDialog(
+                                    content: Text(
+                                        'You will loose the money spent on the game'),
+                                    title:
+                                    Text('Exit the game?'),
+                                    actions: [
+                                      CupertinoDialogAction(
+                                        isDefaultAction: true,
+                                        onPressed: () =>
+                                            Navigator.pop(
+                                                context),
+                                        child: Text(
+                                          'Cancel',
                                         ),
-                                        InkWell(
-                                          onTap: () => Navigator.pop(context),
-                                          child: Container(
-                                            width: 279.w,
-                                            height: 72.h,
-                                            decoration: BoxDecoration(
-                                                image: DecorationImage(
-                                                    image: Svg(
-                                                        Assets.images
-                                                            .onboardingbtn.path,
-                                                        size: Size(
-                                                            279.w, 72.h)))),
-                                            child: Center(
-                                              child: Text(
-                                                'resume'.toUpperCase(),
-                                                style: TextStyle(
-                                                    color: AppColors.white,
-                                                    fontSize: 35.w,
-                                                    fontFamily: 'Bebas',
-                                                    fontWeight:
-                                                        FontWeight.w700),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: 24.h),
-                                          child: InkWell(
-                                            onTap: () => showCupertinoDialog(
-                                                context: context,
-                                                builder: (_) =>
-                                                    CupertinoAlertDialog(
-                                                      content: Text(
-                                                          'You will loose the money spent on the game'),
-                                                      title:
-                                                      Text('Restart the game?'),
-                                                      actions: [
-                                                        CupertinoDialogAction(
-                                                          isDefaultAction: true,
-                                                          onPressed: () =>
-                                                              Navigator.pop(
-                                                                  context),
-                                                          child: Text(
-                                                            'Cancel',
-                                                          ),
-                                                        ),
-                                                        CupertinoDialogAction(
-                                                          onPressed: (){
-                                                            user.balance=user.balance!-widget.bet;
-                                                            Navigator.pushReplacement(
-                                                              context,
-                                                              MaterialPageRoute(
-                                                                  builder: (_) =>
-                                                                      GameScreen(
-                                                                        bet: widget.bet,
-                                                                      )));
-                                                            },
-                                                          child: Text('Yes'),
-                                                        ),
-                                                      ],
-                                                    )),
-                                            child: Container(
-                                              width: 279.w,
-                                              height: 72.h,
-                                              decoration: BoxDecoration(
-                                                  image: DecorationImage(
-                                                      image: Svg(
-                                                          Assets.images
-                                                              .longbtnnlue.path,
-                                                          size: Size(
-                                                              279.w, 72.h)))),
-                                              child: Center(
-                                                child: Text(
-                                                  'restart'.toUpperCase(),
-                                                  style: TextStyle(
-                                                      color: AppColors.white,
-                                                      fontSize: 35.w,
-                                                      fontFamily: 'Bebas',
-                                                      fontWeight:
-                                                          FontWeight.w700),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        InkWell(
-                                          onTap: () => showCupertinoDialog(
-                                              context: context,
-                                              builder: (_) =>
-                                                  CupertinoAlertDialog(
-                                                    content: Text(
-                                                        'You will loose the money spent on the game'),
-                                                    title:
-                                                        Text('Exit the game?'),
-                                                    actions: [
-                                                      CupertinoDialogAction(
-                                                        isDefaultAction: true,
-                                                        onPressed: () =>
-                                                            Navigator.pop(
-                                                                context),
-                                                        child: Text(
-                                                          'Cancel',
-                                                        ),
-                                                      ),
-                                                      CupertinoDialogAction(
-                                                        onPressed: (){
-                                                          user.balance=(user.balance!-widget.bet);
-                                                          Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                                builder: (_) =>
-                                                                    HomeScreen()));},
-                                                        child: Text('Yes'),
-                                                      ),
-                                                    ],
-                                                  )),
-                                          child: Container(
-                                            width: 279.w,
-                                            height: 72.h,
-                                            decoration: BoxDecoration(
-                                                image: DecorationImage(
-                                                    image: Svg(
-                                                        Assets.images
-                                                            .longbtnnlue.path,
-                                                        size: Size(
-                                                            279.w, 72.h)))),
-                                            child: Center(
-                                              child: Text(
-                                                'exit'.toUpperCase(),
-                                                style: TextStyle(
-                                                    color: AppColors.white,
-                                                    fontSize: 35.w,
-                                                    fontFamily: 'Bebas',
-                                                    fontWeight:
-                                                        FontWeight.w700),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                      ),
+                                      CupertinoDialogAction(
+                                        onPressed: () {
+                                          user.balance =
+                                          (user.balance! -
+                                              widget.bet);
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (_) =>
+                                                      MainScreen()));
+                                        },
+                                        child: Text('Yes'),
+                                      ),
+                                    ],
                                   )),
                           icon: Icon(
-                            Icons.menu_rounded,
+                            Icons.clear,
                             color: AppColors.white,
-                            size: 30.w,
+                            size: 24.w,
                           )),
                       Spacer(),
                       Text(
                         '${user.balance}',
-                        style: TextStyle(
-                            color: AppColors.white,
-                            fontSize: 28.w,
-                            fontWeight: FontWeight.w700,
-                            fontFamily: 'Bebas'),
+                        style: AppTypography.main.copyWith(
+                          fontSize: 20.w,
+                          fontWeight: FontWeight.w500
+                        ),
                       ),
+                      SizedBox(width: 4.w,),
                       Image.asset(
                         Assets.images.coin.path,
                         filterQuality: FilterQuality.high,
+                        width: 27.w,
+                        height: 27.h,
                       )
                     ],
                   ),
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
                       step == 1
                           ? 'Choose the side and tap'
-                          : 'You will get ${winsum.round()}',
-                      style: TextStyle(
-                          color: AppColors.white,
-                          fontSize: 28.w,
-                          fontWeight: FontWeight.w700,
-                          fontFamily: 'Bebas'),
-                    )
+                          : 'You will get: +${winsum.round()}',
+                      style: AppTypography.main.copyWith(
+                        fontSize: 20.w,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    SizedBox(width: 4.w,),
+                    if (winsum > widget.bet)
+                      Image.asset(
+                        Assets.images.coin.path,
+                        width: 27.w,
+                        filterQuality: FilterQuality.high,
+                      )
                   ],
                 ),
                 Column(
@@ -262,33 +138,39 @@ class _GameState extends State<GameScreen> {
                       children: [
                         for (int i = 0; i < 3; i++)
                           InkWell(
-                            onTap: () async {if(Hive.box<UserModel>('user').values.first.balance!>=widget.bet){
-                              if (step < 4)
-                                setState(() {
-                                  step++;
-                                  horizontal = i;
-                                });
-                              if (bombs[3] != i && step == 4) {
-                                user.balance=user.balance!-widget.bet;
-                                setState(() =>
-                                    winsum = winsum * coeff[3] + widget.bet);
-                                await Hive.box<UserModel>('user').clear();
-                                await Hive.box<UserModel>('user').add(user);
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (_) =>
-                                            WinScreen(sum: winsum.toInt())));
-                              } else {
-                                await Hive.box<UserModel>('user').clear();
-                                await Hive.box<UserModel>('user').add(user);
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (_) =>
-                                            LooseScreen(sum: winsum.toInt())));
+                            onTap: () async {
+                              if (Hive.box<UserModel>('user')
+                                      .values
+                                      .first
+                                      .balance! >=
+                                  widget.bet) {
+                                if (step < 4)
+                                  setState(() {
+                                    step++;
+                                    horizontal = i;
+                                  });
+                                if (bombs[3] != i && step == 4) {
+                                  user.balance = user.balance! - widget.bet;
+                                  setState(() =>
+                                      winsum = winsum * coeff[3] + widget.bet);
+                                  await Hive.box<UserModel>('user').clear();
+                                  await Hive.box<UserModel>('user').add(user);
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (_) =>
+                                              WinScreen(sum: winsum.toInt())));
+                                } else {
+                                  await Hive.box<UserModel>('user').clear();
+                                  await Hive.box<UserModel>('user').add(user);
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (_) => LooseScreen(
+                                              sum: winsum.toInt())));
+                                }
                               }
-                            }},
+                            },
                             child: Container(
                               width: 109.w,
                               height: 93.h,
@@ -303,26 +185,31 @@ class _GameState extends State<GameScreen> {
                         for (int i = 0; i < 3; i++)
                           InkWell(
                             onTap: () async {
-                              if(Hive.box<UserModel>('user').values.first.balance!>=widget.bet){
-                              if (step < 3)
-                                setState(() {
-                                  step++;
-                                  horizontal = i;
-                                  horStepHistory[2] = i;
-                                });
-                              if (bombs[2] != i && step == 3) {
-                                user.balance=user.balance!-widget.bet;
-                                setState(() =>
-                                    winsum = winsum * coeff[2] + widget.bet);
-                              } else {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (_) => LooseScreen(
-                                              sum: winsum.toInt(),
-                                            )));
+                              if (Hive.box<UserModel>('user')
+                                      .values
+                                      .first
+                                      .balance! >=
+                                  widget.bet) {
+                                if (step < 3)
+                                  setState(() {
+                                    step++;
+                                    horizontal = i;
+                                    horStepHistory[2] = i;
+                                  });
+                                if (bombs[2] != i && step == 3) {
+                                  user.balance = user.balance! - widget.bet;
+                                  setState(() =>
+                                      winsum = winsum * coeff[2] + widget.bet);
+                                } else {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (_) => LooseScreen(
+                                                sum: winsum.toInt(),
+                                              )));
+                                }
                               }
-                            }},
+                            },
                             child: Container(
                               width: 109.w,
                               height: 93.h,
@@ -336,25 +223,31 @@ class _GameState extends State<GameScreen> {
                       children: [
                         for (int i = 0; i < 3; i++)
                           InkWell(
-                            onTap: () async {if(Hive.box<UserModel>('user').values.first.balance!>=widget.bet){
-                              if (step < 2)
-                                setState(() {
-                                  step++;
-                                  horizontal = i;
-                                  horStepHistory[1] = i;
-                                });
-                              if (bombs[1] != i && step == 2) {
-                                user.balance=user.balance!-widget.bet;
-                                setState(() => winsum *= coeff[1]);
-                              } else {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (_) => LooseScreen(
-                                              sum: winsum.toInt(),
-                                            )));
+                            onTap: () async {
+                              if (Hive.box<UserModel>('user')
+                                      .values
+                                      .first
+                                      .balance! >=
+                                  widget.bet) {
+                                if (step < 2)
+                                  setState(() {
+                                    step++;
+                                    horizontal = i;
+                                    horStepHistory[1] = i;
+                                  });
+                                if (bombs[1] != i && step == 2) {
+                                  user.balance = user.balance! - widget.bet;
+                                  setState(() => winsum *= coeff[1]);
+                                } else {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (_) => LooseScreen(
+                                                sum: winsum.toInt(),
+                                              )));
+                                }
                               }
-                            }},
+                            },
                             child: Container(
                               width: 109.w,
                               height: 93.h,
@@ -377,53 +270,30 @@ class _GameState extends State<GameScreen> {
                     Assets.images.gameborder.svg(width: 328.w),
                   ],
                 ),
-                SizedBox(
-                  height: 20.h,
-                ),
+                Spacer(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('Tap cost - ${widget.bet}',
-                        style: TextStyle(
-                            color: AppColors.white,
-                            fontSize: 28.w,
-                            fontWeight: FontWeight.w700,
-                            fontFamily: 'Bebas')),
+                    Text('Tap cost - ${widget.bet} ',
+                        style: AppTypography.main.copyWith(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 20.w,
+                        )),
                     Image.asset(
                       Assets.images.coin.path,
                       filterQuality: FilterQuality.high,
+                      width: 27.w,
+                      height: 27.h,
                     )
                   ],
                 ),
-                SizedBox(
-                  height: 25.h,
-                ),
+                SizedBox(height: 26.h,),
                 step > 1
-                    ? InkWell(
-                        onTap: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (_) =>
-                                    WinScreen(sum: winsum.toInt()))),
-                        child: Container(
-                          width: 279.w,
-                          height: 72.h,
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: Svg(Assets.images.onboardingbtn.path,
-                                      size: Size(279.w, 72.h)))),
-                          child: Center(
-                            child: Text(
-                              'take a reward'.toUpperCase(),
-                              style: TextStyle(
-                                  color: AppColors.white,
-                                  fontSize: 35.w,
-                                  fontFamily: 'Bebas',
-                                  fontWeight: FontWeight.w700),
-                            ),
-                          ),
-                        ),
-                      )
+                    ? MainButton(onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) =>
+                            WinScreen(sum: winsum.toInt()))), label: 'Take a reward')
                     : Container()
               ],
             ),
@@ -437,7 +307,8 @@ class _GameState extends State<GameScreen> {
         child: Image.asset(
           Assets.images.bomb.path,
           filterQuality: FilterQuality.high,
-          height: 72.h,
+          height: 54.h,
+          width: 72.w,
         ),
       );
     if ((step == stepInd &&
@@ -448,7 +319,8 @@ class _GameState extends State<GameScreen> {
         child: Image.asset(
           Assets.images.bomb.path,
           filterQuality: FilterQuality.high,
-          height: 72.h,
+          height: 54.h,
+          width: 72.w,
         ),
       );
     if ((step == 4 &&
@@ -457,22 +329,22 @@ class _GameState extends State<GameScreen> {
             stepInd > 3) ||
         (horStepHistory[stepInd - 1] == indexCell && step > stepInd))
       return Center(
-        child: Assets.images.gamestar.svg(
-            color: AppColors.white.withOpacity(0.5), width: 40.w, height: 40.h),
+        child: Image.asset(
+          'assets/images/greystar.png',
+          filterQuality: FilterQuality.high,
+          width: 72.w,
+          height: 72.h,
+        ),
       );
     if (step < 4 && stepInd - 1 == step)
       return Center(
         child: Container(
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(100.r),
-              boxShadow: [
-                BoxShadow(
-                    color: Color(0xFFFFC700).withOpacity(0.15),
-                    spreadRadius: 0.3,
-                    blurRadius: 7)
-              ]),
-          child: Assets.images.gamestar
-              .svg(color: Color(0xFFFFC700), width: 40.w, height: 40.h),
+          child: Image.asset(
+            'assets/images/yellowstar.png',
+            filterQuality: FilterQuality.high,
+            width: 72.w,
+            height: 72.h,
+          ),
         ),
       );
 
@@ -485,7 +357,8 @@ class _GameState extends State<GameScreen> {
         child: Image.asset(
           Assets.images.bomb.path,
           filterQuality: FilterQuality.high,
-          height: 72.h,
+          height: 54.h,
+          width: 72.w,
         ),
       );
     if ((stepInd == 1 && indexCell == 1 && step > 1) ||
@@ -494,10 +367,14 @@ class _GameState extends State<GameScreen> {
             bombs[stepInd - 1] != indexCell &&
             bombs[stepInd - 1] != -100 &&
             stepInd > 1) ||
-        (horizontal != indexCell && step == stepInd && stepInd!=1))
+        (horizontal != indexCell && step == stepInd && stepInd != 1))
       return Center(
-        child: Assets.images.gamestar
-            .svg(color: AppColors.white, width: 40.w, height: 40.h),
+        child: Image.asset(
+          'assets/images/whitestar.png',
+          filterQuality: FilterQuality.high,
+          width: 72.w,
+          height: 72.h,
+        ),
       );
     return indexCell == horizontal && step == stepInd
         ? Center(

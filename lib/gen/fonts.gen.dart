@@ -8,6 +8,6 @@
 class FontFamily {
   FontFamily._();
 
-  /// Font family: Bebas
-  static const String bebas = 'Bebas';
+  /// Font family: SFPro
+  static const String sFPro = 'SFPro';
 }

@@ -5,8 +5,11 @@ import 'package:hive/hive.dart';
 import 'package:wuskan/gen/assets.gen.dart';
 import 'package:wuskan/main.dart';
 import 'package:wuskan/models/user/user_model.dart';
+import 'package:wuskan/ui/onboarding/uikit/info_container.dart';
+import 'package:wuskan/uikit/main_button.dart';
 import 'package:wuskan/utils/color_palette/colors.dart';
 import 'package:wuskan/utils/routes/routes.dart';
+import 'package:wuskan/utils/typography/apptypography.dart';
 
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({Key? key}) : super(key: key);
@@ -22,22 +25,11 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
         child: Scaffold(
-          backgroundColor: Color(0xFF142850),
-          body:Container(
-            width: double.infinity,
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Color(0xFF142850),
-                      Color(0xFF253B6E),
-                    ],
-                ),
-                image: DecorationImage(
-                    image: AssetImage('assets/images/${Hive.box<UserModel>('user').values.first.activeBg}.png'),
-                    fit: BoxFit.fill,
-                ),
+          backgroundColor: AppColors.darkBlue,
+          body: SafeArea(
+            minimum: EdgeInsets.symmetric(
+              horizontal: 16.w,
+              vertical: 21.h,
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -46,166 +38,97 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Padding(
-                      padding: EdgeInsets.only(
-                          top: 63.h, right: 31.w, bottom: 19.h),
-                      child: InkWell(
-                        onTap: () async {
-                          final box = await Hive.openBox<bool>('seen');
-                          await box.clear();
-                          await box.put('seen', true);
-                          Navigator.pushNamed(
-                              context, MainNavigationRoutes.main);
-                        },
-                        child: Icon(
-                          Icons.clear,
-                          color: AppColors.white,
-                          size: 30.h,
-                        ),
+                    InkWell(
+                      onTap: () async {
+                        final box = await Hive.openBox<bool>('seen');
+                        await box.clear();
+                        await box.put('seen', true);
+                        Navigator.pushNamed(context, MainNavigationRoutes.main);
+                      },
+                      child: Icon(
+                        Icons.clear,
+                        color: AppColors.white,
+                        size: 30.h,
                       ),
-                    )
+                    ),
                   ],
+                ),
+                Container(
+                  padding: EdgeInsets.only(top: 56.h),
+                  child: Image.asset(
+                    Assets.images.logo.path,
+                    filterQuality: FilterQuality.high,
+                    height: 285.h,
+                    width: 374.w,
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.only(top: 54.h, bottom: 16.h),
+                  child: Text.rich(TextSpan(
+                      text: 'Buy ',
+                      style: AppTypography.main.copyWith(
+                          fontSize: 20.w,
+                          fontWeight: FontWeight.w500),
+                      children: [
+                        TextSpan(
+                            text: "premium for 0.99\$ ".toUpperCase(),
+                            style: AppTypography.main.copyWith(
+                              fontSize: 20.w,
+                              fontWeight: FontWeight.w500,
+                              color: AppColors.primaryBlue,
+                            )),
+                        TextSpan(
+                          text: 'to unlock all the features',
+                          style: AppTypography.main.copyWith(
+                              fontSize: 20.w,
+                              fontWeight: FontWeight.w500),
+                        )
+                      ])),
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 0),
-                      child: Image.asset(
-                        Assets.images.logo.path,
-                        filterQuality: FilterQuality.high,
-                        height: 285.h,
-                        width: 374.w,
-                      ),
-                    ),
+                    InfoContainer(label: 'Ads removing', image: Assets.images.speaker.svg(width: 22.w,height: 21.h),),
+                    InfoContainer(label: 'Unlimited coins', image: Assets.images.unlimcoins.svg(width: 20.w,height: 21.h),),
+                    InfoContainer(label: 'Santa Claus skin', image: Assets.images.palette.svg(width: 22.w,height: 21.h),),
                   ],
                 ),
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 12.h),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Let’s unlock all the\nfeatures".toUpperCase(),
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: AppColors.white,
-                          fontSize: 35.w,
-                          fontWeight: FontWeight.w700,
-                          fontFamily: 'Bebas',
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 8.h,
-                ),
-                Padding(
-                  padding:
-                  EdgeInsets.symmetric(horizontal: 56.w, vertical: 24.h),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Assets.images.polygon.svg(width: 16.w,height: 16.w),
-                      Text(
-                        'Unlimited balance',
-                        style: TextStyle(
-                            color: AppColors.white,
-                            fontWeight: FontWeight.w700,
-                            fontFamily: 'Bebas',
-                            fontSize: 28.w),
-                      ),
-                      Assets.images.polygon.svg(width: 16.w,height: 16.w),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 56.w),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Assets.images.polygon.svg(width: 16.w,height: 16.w),
-                      Text(
-                        'AD removing',
-                        style: TextStyle(
-                            color: AppColors.white,
-                            fontWeight: FontWeight.w700,
-                            fontFamily: 'Bebas',
-                            fontSize: 28.w),
-                      ),
-                      Assets.images.polygon.svg(width: 16.w,height: 16.w),
-                    ],
-                  ),
-                ),
                 Spacer(),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 48.w),
-                  child: InkWell(
+                MainButton(
                     onTap: () async {
-                      purchase().then((value) => subscribed=value);
+                      purchase().then((value) => subscribed = value);
                       Navigator.pushNamed(context, MainNavigationRoutes.main);
                     },
-                    child: Container(
-                      height: 72.h,
-                      width: 279.w,
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: Svg(Assets.images.onboardingbtn.path,
-                                  size: Size(279.w, 72.h)))),
-                      child: Center(
-                        child: Text(
-                          "Buy for 0.99\$".toUpperCase(),
-                          style: TextStyle(
-                            color: AppColors.white,
-                            fontWeight: FontWeight.w700,
-                            fontFamily: 'Bebas',
-                            fontSize: 35.w,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+                    label: 'Buy premium'),
                 Padding(
                   padding:
-                  EdgeInsets.symmetric(horizontal: 56.w, vertical: 18.h),
+                      EdgeInsets.symmetric(horizontal: 25.w, vertical: 18.h),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       InkWell(
-                        onTap: () =>openTermsOfUse(),
+                        onTap: () => openTermsOfUse(),
                         child: Text(
                           'Terms of use',
-                          style: TextStyle(
-                            color: AppColors.white,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: 'Bebas',
-                            fontSize: 16.w,
-                          ),
+                          style: AppTypography.main.copyWith(
+                              fontSize: 12.w, fontWeight: FontWeight.w400),
                         ),
                       ),
                       InkWell(
-                        onTap: ()=>restore().then((value) => value ? Navigator.pop(context) : null),
+                        onTap: () => restore().then(
+                            (value) => value ? Navigator.pop(context) : null),
                         child: Text(
                           'Restore',
-                          style: TextStyle(
-                              color: AppColors.white,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Bebas',
-                              fontSize: 16.w),
+                          style: AppTypography.main.copyWith(
+                              fontSize: 12.w, fontWeight: FontWeight.w400),
                         ),
                       ),
                       InkWell(
                         onTap: () => openPrivacyPolicy(),
                         child: Text(
                           'Privacy Policy',
-                          style: TextStyle(
-                              color: AppColors.white,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Bebas',
-                              fontSize: 16.w),
+                          style: AppTypography.main.copyWith(
+                              fontSize: 12.w, fontWeight: FontWeight.w400),
                         ),
                       ),
                     ],

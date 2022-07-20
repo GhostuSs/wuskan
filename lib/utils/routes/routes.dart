@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wuskan/ui/home/ui/home_screen.dart';
+import 'package:wuskan/ui/main/ui/main_screen.dart';
 import 'package:wuskan/ui/onboarding/ui/onboarding.dart';
 
 

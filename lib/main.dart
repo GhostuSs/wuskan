@@ -194,19 +194,17 @@ void startMain() async {
   // final boxf = await Hive.openBox<bool>('premium');
   // await boxf.clear();
   final s = await Hive.openBox<UserModel>('user');
-  // await s.clear();
-  if (s.values.isEmpty) {
+  if (s.values.isEmpty){
     s.put(
         'user',
         UserModel(
-            balance: 1000,
-            activeBg: 'bg1',
-            activeSkin: 'mike',
-            availableSkins: ['mike'],
-            availableBg: ['bg1'],
+            balance: 0,
+            activeSkin: 'standart',
+            availableSkins: ['standart'],
+            dailyCoinBalance: 2000,
             lastUpdate: DateTime.now(),
-            dailyCoinBalance: 1000,
-        ));
+        ),
+    );
     // s.close().then((value) async => await Hive.openBox<UserModel>('user'));
     print('empty');
   }
@@ -217,12 +215,12 @@ class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
     return ScreenUtilInit(
       designSize: const Size(390, 844),
       builder: (Column) => MaterialApp(
         darkTheme: ThemeData(
-          selectedRowColor: AppColors.aquaBlue,
+          selectedRowColor: AppColors.primaryBlue,
           unselectedWidgetColor: AppColors.lightBlue.withOpacity(0.3),
         ),
         routes: routes,
@@ -232,22 +230,23 @@ class App extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           bottomNavigationBarTheme: BottomNavigationBarThemeData(
-              selectedItemColor: AppColors.aquaBlue,
+              selectedItemColor: AppColors.primaryBlue,
               selectedLabelStyle: TextStyle(
-                fontFamily: 'MontBold',
+                fontFamily: 'SFPro',
                 fontWeight: FontWeight.w400,
                 fontSize: 12.h,
+                color: AppColors.primaryBlue
               ),
-              showUnselectedLabels: true,
+              showUnselectedLabels: false,
               showSelectedLabels: true,
-              unselectedItemColor: AppColors.aquaBlue.withOpacity(0.3),
+              unselectedItemColor: AppColors.primaryBlue,
               unselectedLabelStyle: TextStyle(
-                  color: AppColors.aquaBlue.withOpacity(0.3),
-                  fontFamily: 'MontBold',
+                  color: AppColors.darkBlue,
+                  fontFamily: 'SFPro',
                   fontWeight: FontWeight.w400,
                   fontSize: 12.h),
               unselectedIconTheme: IconThemeData(
-                color: AppColors.aquaBlue.withOpacity(0.3),
+                color: AppColors.gray.withOpacity(0.6),
               )),
           textTheme: TextTheme(
               button: TextStyle(

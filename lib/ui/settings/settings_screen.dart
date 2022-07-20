@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:hive/hive.dart';
 import 'package:in_app_review/in_app_review.dart';
 import 'package:wuskan/gen/assets.gen.dart';
 import 'package:wuskan/main.dart';
 import 'package:wuskan/models/user/user_model.dart';
-import 'package:wuskan/ui/coins/coins_screen.dart';
 import 'package:wuskan/ui/onboarding/ui/onboarding.dart';
 import 'package:wuskan/utils/color_palette/colors.dart';
+import 'package:wuskan/utils/typography/apptypography.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -27,96 +26,91 @@ class _HomeScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
         child: Scaffold(
-          backgroundColor: Color(0xFF142850),
-          body: Container(
-            width: double.infinity,
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [Color(0xFF142850), Color(0xFF253B6E)]),
-                image: DecorationImage(
-                    image: AssetImage('assets/images/${Hive.box<UserModel>('user').values.first.activeBg}.png'),
-                    fit: BoxFit.fill)),
-            child: Padding(
-              padding: EdgeInsets.only(
-                  bottom: 45.h, top: 56.h, left: 20.w, right: 20.w),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      IconButton(
-                          onPressed: () => Navigator.pop(context),
-                          icon: Icon(
-                            Icons.arrow_back,
-                            color: AppColors.white,
-                            size: 30.h,
-                          )),
-                      Spacer(),
-                      Text(
-                        '${Hive.box<UserModel>('user').values.first.balance}',
-                        style: TextStyle(
-                          color: AppColors.white,
-                          fontSize: 28.h,
-                          fontWeight: FontWeight.w700,
-                          fontFamily: 'Bebas',
-                        ),
+          backgroundColor: AppColors.darkBlue,
+          body: SafeArea(
+            minimum: EdgeInsets.only(left: 16.w,right: 16.w,top: 16.h,),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Spacer(),
+                    Text(
+                      '${Hive.box<UserModel>('user').values.first.balance}',
+                      style: AppTypography.main.copyWith(
+                        fontSize:20.w,
+                        fontWeight:FontWeight.w500,
                       ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 5.w),
-                        child: Image.asset(
-                          Assets.images.coin.path,
-                          filterQuality: FilterQuality.high,
-                        ),
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    height: 40.h,
-                  ),
-                  if(!subscribed)RawBtn(
-                    label: 'buy premium',
-                    svgPath: Assets.images.prembtn.path,
-                    onTap: () => Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => OnBoardingScreen())),
-                  ),
-                  if(subscribed)RawBtn(
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 4.w),
+                      child: Image.asset(
+                        Assets.images.coin.path,
+                        filterQuality: FilterQuality.high,
+                        width: 27.w,
+                          height: 27.h,
+                      ),
+                    )
+                  ],
+                ),
+                Container(
+                  padding: EdgeInsets.only(top: 32.h,bottom: 8.h),
+                  child: Text('Settings',style: AppTypography.main.copyWith(
+                    fontSize: 28.w,
+                    fontWeight: FontWeight.w500,
+
+                  ),),
+                ),
+                Container(
+                  padding: EdgeInsets.only(bottom: 16.h),
+                  child: Text('Check what you need',style: AppTypography.main.copyWith(
+                    fontSize: 16.w,
+                    fontWeight: FontWeight.w400,
+                    color: AppColors.gray.withOpacity(0.6)
+
+                  ),),
+                ),
+                if(!subscribed)RawBtn(
+                  label: 'Buy premium',
+                  icon: Assets.images.premium,
+                  onTap: () => Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => OnBoardingScreen())),
+                ),
+                if(subscribed)RawBtn(
                     onTap: ()async {
                       if(Hive.box<UserModel>('user').values.first.lastUpdate!.day-DateTime.now().day>=1){
                         setState(()=> user.balance=user.balance!+user.dailyCoinBalance!);
                         await Hive.box<UserModel>('user').clear();
                         await Hive.box<UserModel>('user').add(user);
-                          }else{
+                      }else{
                         print('День еще не прошел');
                       }
                     },
-                      label: 'get daily coins',
-                      svgPath: Assets.images.settingsprplbtn.path),
-                  if(subscribed)RawBtn(
-                    onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (_)=>DailyCoinsScreen())),
-                      label: 'change coin balance',
-                      svgPath: Assets.images.settingsprplbtn.path),
-                  RawBtn(
+                    label: 'Get daily coins',
+                    icon: Assets.images.unlimcoins),
+                RawBtn(
                     onTap: ()=>openPrivacyPolicy(),
-                      label: 'privacy policy',
-                      svgPath: Assets.images.longbtnnlue.path),
-                  RawBtn(
-                      onTap: ()=>openTermsOfUse(),
-                      label: 'terms of use',
-                      svgPath: Assets.images.longbtnnlue.path),
-                  RawBtn(
+                    label: 'Privacy policy',
+                    icon: Assets.images.privacy),
+                RawBtn(
+                    onTap: ()=>openTermsOfUse(),
+                    label: 'Terms of use',
+                    icon: Assets.images.terms),
+                RawBtn(
                     onTap:()=>inappreview.requestReview(),
-                      label: 'rate app',
-                      svgPath: Assets.images.longbtnnlue.path),
-                  RawBtn(
+                    label: 'Rate app',
+                    icon: Assets.images.rate),
+                RawBtn(
+                    onTap:(){},
+                    label: 'Share app',
+                    icon: Assets.images.share),
+                RawBtn(
                     onTap:()=>openSupport(),
-                      label: 'support',
-                      svgPath: Assets.images.longbtnnlue.path),
-                ],
-              ),
+                    label: 'Support',
+                    icon: Assets.images.support),
+              ],
             ),
           ),
         ),
@@ -125,33 +119,44 @@ class _HomeScreenState extends State<SettingsScreen> {
 }
 
 class RawBtn extends StatelessWidget {
-  RawBtn({this.onTap, required this.label, required this.svgPath});
+  RawBtn({this.onTap, required this.label, required this.icon});
   final String label;
   final VoidCallback? onTap;
-  final String svgPath;
+  final  SvgGenImage icon;
   @override
   Widget build(BuildContext context) => Padding(
         padding: EdgeInsets.symmetric(vertical: 12.h),
         child: InkWell(
           onTap: onTap,
+          borderRadius: BorderRadius.circular(16.r),
           child: Container(
-            width: 280.w,
-            height: 72.h,
+            width: double.infinity,
+            padding: EdgeInsets.all(16.r),
             decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: Svg(svgPath, size: Size(280.w, 72.h)))),
-            child: Center(
-              child: Text(
-                label.toUpperCase(),
-                style: TextStyle(
-                  color: label == 'buy premium'
-                      ? Color(0xFFFFDE41)
-                      : AppColors.white,
-                  fontSize: 35.w,
-                  fontWeight: FontWeight.w700,
-                  fontFamily: 'Bebas',
-                ),
-              ),
+              borderRadius: BorderRadius.circular(16.r),
+                color: Color(0xFF122855),
+              border: Border.all(
+                  color: label=='Buy premium' ? Color(0xFFFFE600) : AppColors.primaryBlue
+             ,
+                  width: 2.w
+              )
+            ),
+            child: Row(
+              children: [
+                icon.svg(width: 20.w,
+                color: label=='Buy premium' ? Color(0xFFFFE600) : AppColors.primaryBlue),
+                SizedBox(width: 14.w,),
+                Text(
+                  label,
+                  style: AppTypography.main.copyWith(
+                      color:label == 'Buy premium'
+                          ? Color(0xFFFFE600)
+                          : AppColors.white,
+                      fontSize: 20.w,
+                      fontWeight: FontWeight.w500
+                  ),
+                )
+              ],
             ),
           ),
         ),

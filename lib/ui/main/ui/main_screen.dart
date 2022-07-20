@@ -5,54 +5,27 @@ import 'package:page_transition/page_transition.dart';
 import 'package:wuskan/gen/assets.gen.dart';
 import 'package:wuskan/models/user/user_model.dart';
 import 'package:wuskan/ui/game/ui/game_screen.dart';
-import 'package:wuskan/ui/home/uikit/sum_container.dart';
+import 'package:wuskan/ui/main/uikit/sum_container.dart';
 import 'package:wuskan/uikit/main_button.dart';
 import 'package:wuskan/utils/color_palette/colors.dart';
 import 'package:wuskan/utils/typography/apptypography.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class MainScreen extends StatefulWidget {
+  const MainScreen({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return _HomeScreenState();
+    return _MainScreenState();
   }
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _MainScreenState extends State<MainScreen> {
   int selectedSum = 250;
-  int _selectedIndex = 0;
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
         child: Scaffold(
           backgroundColor: AppColors.darkBlue,
-          bottomNavigationBar: BottomNavigationBar(
-            items: const <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: 'Home',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.business),
-                label: 'Business',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.school),
-                label: 'School',
-              ),
-            ],
-            currentIndex: _selectedIndex,
-            selectedItemColor: Colors.amber[800],
-            onTap: _onItemTapped,
-          ),
           floatingActionButton: MainButton(
               onTap: () => Navigator.push(
                     context,

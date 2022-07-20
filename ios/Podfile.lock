@@ -187,7 +187,7 @@ SPEC CHECKSUMS:
   FirebaseCore: 5743c5785c074a794d35f2fff7ecc254a91e08b1
   FirebaseCoreDiagnostics: 92e07a649aeb66352b319d43bdd2ee3942af84cb
   FirebaseDatabase: f567afd233e54a303d84423207736590a6feb419
-  Flutter: 405776dd0763d7e32a8f989d4e271ca1317d080c
+  Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   flutter_facebook_app_links: a16c3850ae577f51e5cdca14510b1bd486e09337
   flutter_webview_plugin: ed9e8a6a96baf0c867e90e1bce2673913eeac694
   GoogleDataTransport: 5fffe35792f8b96ec8d6775f5eccd83c998d5a3b
